@@ -5,107 +5,194 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>パラドクスナイト - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
-</head>
-<div class="card">
-  <h1 class="song-title">ハグバグ</h1>
-
-  <!-- YouTube 埋め込みプレイヤー（API制御用に id="player" を付与） -->
-  <div style="width: 100%; max-width: 560px; margin: 0 auto 20px auto; border-radius: 12px; overflow: hidden;">
-    <div id="player"></div>
-  </div>
-
-  <!-- タイムスタンプ付きコール表 -->
-  <div class="lyrics">
-    <div class="call-block" data-start="0" data-end="10">
-      <span class="time-label">0:00~</span>
-      <span class="call">（ミョーホントゥスケ化繊飛除去ジャージャファイボワイパー）</span>
-    </div>
-
-    <div class="call-block" data-start="65" data-end="75">
-      <span class="time-label">1:05~</span> 【1番サビ前】<br>
-      〜〜朝まで目が覚めるまで<br>
-      <span class="call">（ひまりコール：ひまり×4）</span>
-    </div>
-
-    <div class="call-block" data-start="80" data-end="95">
-      <span class="time-label">1:20~</span> 【1番サビ】<br>
-      〜〜そんくらいが <span class="call">（はいせーのはいせーの）</span><br>
-      〜〜ちょうどいいかもね <span class="call">（おーいおいおいおいおいおい）</span>
-    </div>
-  </div>
-</div>
-
-<!-- スタイル（ハイライト表示用） -->
-<style>
-  .call-block {
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    transition: background-color 0.3s, border-left 0.3s;
-    border-left: 4px solid transparent;
-  }
-  /* 再生中のハイライトCSS */
-  .call-block.active {
-    background-color: #ffe6ed; /* 薄いピンク背景 */
-    border-left: 4px solid var(--primary-color, #ff4785);
-    font-weight: bold;
-  }
-  .time-label {
-    font-size: 0.8rem;
-    color: #888;
-    margin-right: 6px;
-  }
-</style>
-
-<!-- YouTube IFrame Player API の制御スクリプト -->
-<script>
-  // 1. YouTube APIの読み込み
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '315',
-      width: '560',
-      videoId: '4pcqsORvThE', // ★対象の動画IDに差し替えてください
-      playerVars: { 'playsinline': 1 },
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  var checkTimer = null;
-
-  // 再生状態に合わせてタイマーを制御
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      // 0.5秒ごとに再生時間をチェック
-      checkTimer = setInterval(updateHighlight, 500);
-    } else {
-      clearInterval(checkTimer);
+  <style>
+    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
+    .media-container {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
     }
-  }
+    .media-container iframe {
+      width: 100% !important;
+      aspect-ratio: 16 / 9;
+      height: auto !important;
+      display: block;
+      border: none;
+    }
 
-  // 再生時間に応じてハイライトを切り替える関数
-  function updateHighlight() {
-    if (!player || !player.getCurrentTime) return;
-    var currentTime = player.getCurrentTime();
-    var blocks = document.querySelectorAll('.call-block');
+    /* ハイライト用のスタイル */
+    .call-block {
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s, border-left 0.3s;
+      border-left: 4px solid transparent;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    .call-block.active {
+      background-color: #ffe6ed; /* ハイライト背景色 */
+      border-left: 4px solid var(--primary-color, #ff4785);
+    }
+    .time-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #888;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
 
-    blocks.forEach(function(block) {
-      var start = parseFloat(block.getAttribute('data-start'));
-      var end = parseFloat(block.getAttribute('data-end'));
+  <header>
+    <a href="../index.html">← トップへ戻る</a>
+  </header>
 
-      if (currentTime >= start && currentTime < end) {
-        block.classList.add('active');
+  <div class="container">
+    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
+
+    <div class="card">
+      <h1 class="song-title">パラドクスナイト</h1>
+
+      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
+      <div class="media-container">
+        <div id="player"></div>
+      </div>
+
+      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+      </div>
+
+      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
+      <div class="lyrics">
+
+        <!-- イントロ1 -->
+        <div class="call-block" data-start="7" data-end="13">
+          <span class="time-label">0:07~</span>
+          <span class="call">（はいせーの ミョーホントゥスケ化繊飛除去ジャジャーファイボワイパー）</span>
+          <br>パラドクスナイト<br>
+        </div>
+        <!-- イントロ2 -->
+        <div class="call-block" data-start="14" data-end="24">
+          <span class="time-label">0:11~</span>
+          <span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞタイガーファイヤーサイバーファイバーダイバーバイバージャージャー）</span> ※スタンダードMIX
+        </div>
+
+        <!-- Aメロ〜Bメロ前 -->
+        <div class="call-block" data-start="27" data-end="29">
+          <span class="time-label">0:27</span>【Aメロ】
+          <br>～～穢されていく <span class="call">（あ！あ！あー！(名前)！）</span><br>
+        </div>
+
+        <div class="call-block" data-start="32" data-end="34">
+          <span class="time-label">0:32~</span>【Aメロ】<br>
+          ～～もやもやもやる世界 <span class="call">（おーれーの！(名前)）</span><br>
+        </div>
+          <div class="call-block" data-start="37" data-end="40">
+          <span class="time-label">0:37~</span>【Aメロ】<br>
+          ～～自分はどうですか <span class="call">（あ！あ！あー！(名前)！）</span><br>
+        </div>
+          <div class="call-block" data-start="45" data-end="50">
+          <span class="time-label">0:45~</span>【Aメロ】<br>
+          ～～HateMySelf～たどり着いた <span class="call">（りりな×4）</span><br>
+        </div>
+          <div class="call-block" data-start="50"data-end="55">
+          <span class="time-label">0:50~</span>【Aメロ】<br>
+          ～～LoveMySelf～今夜も～ <span class="call">（まりあ×2）</span><br>
+        </div>
+
+
+
+        <!-- 1番サビ -->
+        <div class="call-block" data-start="60" data-end="66">
+          <span class="time-label">0:60~</span>【1番サビ】<br>
+          〜〜天使と悪魔が～繋いで <span class="call">（はいせーのはいせーのおーいおいおいおいおい）</span>
+        </div>
+
+        <!-- 間奏（2番前） -->
+        <div class="call-block" data-start="76" data-end="90">
+          <span class="time-label">1:16~</span>【間奏】<br>
+          パラドクスナイト<br>
+          <span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞ虎火人造繊維海女振動化繊）</span> ※日本語MIX
+        </div>
+
+        <!-- 2番サビ -->
+        <div class="call-block" data-start="91" data-end="130">
+          <span class="time-label">1:31~</span>【2番サビ】<br>
+          〜〜手を繋いでる <span class="call">（はいせーのはいせーのおーいおいおいおい）</span>
+        </div>
+
+        <!-- 間奏（ガチ恋口上） -->
+        <div class="call-block" data-start="131" data-end="160">
+          <span class="time-label">2:11~</span>【間奏】<br>
+          パラドクスナイト直後<br>
+          <span class="call">（言いたいことがあるんだよ！やっぱり〇〇可愛いよ！好き好き大好きやっぱ好き！やっと見つけたお姫様！俺が生まれて来た理由！それは〇〇に出会うため！俺と一緒に人生歩もう世界で1番愛してる！）</span> ※ガチ恋口上
+        </div>
+
+        <!-- アウトロ -->
+        <div class="call-block" data-start="161" data-end="190">
+          <span class="time-label">2:41~</span>【アウトロ】<br>
+          パラドクスナイト<br>
+          <span class="call">（世界で1番愛してやまない〇〇に捧げるチャペ虎タイガー チャペ×8 I Love You）</span> ※チャペ虎タイガー
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame Player API スクリプト -->
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '560',
+        videoId: '4pcqsORvThE', // ★対象の11桁の動画ID
+        playerVars: { 
+          'playsinline': 1,
+          'rel': 0
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    var checkTimer = null;
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        checkTimer = setInterval(updateHighlight, 300);
       } else {
-        block.classList.remove('active');
+        clearInterval(checkTimer);
       }
-    });
-  }
-</script>
+    }
+
+    function updateHighlight() {
+      if (!player || !player.getCurrentTime) return;
+      var currentTime = player.getCurrentTime();
+      var blocks = document.querySelectorAll('.call-block');
+
+      blocks.forEach(function(block) {
+        var start = parseFloat(block.getAttribute('data-start'));
+        var end = parseFloat(block.getAttribute('data-end'));
+
+        if (currentTime >= start && currentTime < end) {
+          block.classList.add('active');
+        } else {
+          block.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+</body>
 </html>
