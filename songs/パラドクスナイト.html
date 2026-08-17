@@ -6,138 +6,106 @@
   <title>パラドクスナイト - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
 </head>
-<body>
+<div class="card">
+  <h1 class="song-title">ハグバグ</h1>
 
-  <header>
-    <a href="../index.html">← トップへ戻る</a>
-  </header>
-
-  <div class="container">
-    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
-
-    <div class="card">
-      <h1 class="song-title">パラドクスナイト</h1>
-
-      <!-- YouTube 埋め込み（中央揃え・自動レスポンシブ対応） -->
-      <div style="width: 100%; max-width: 560px; margin: 0 auto 20px auto; border-radius: 12px; overflow: hidden;">
-        <iframe 
-          src="https://www.youtube.com/embed/4pcqsORvThE?si=4UTNQ1dESl5ZWSAd" 
-          title="YouTube video player" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" 
-          allowfullscreen
-          style="width: 100%; aspect-ratio: 16 / 9; height: auto; display: block; border: none;">
-        </iframe>
-      </div>
-
-      <!-- コール表本文 -->
-      <div class="lyrics">
-パラドクスナイト
-<span class="call">（ミョーホントゥスケ化繊飛除去ジャージャファイボワイパー）</span>
-
-パラドクスナイト
-<span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞタイガーファイヤーサイバーファイバーダイバーバイバージャージャー）</span>
-
-真っ白でいたいのに汚されていく
-
-損得 ヤキモチ 自己犠牲
-
-モヤモヤモヤる世界
-
-ほらほらもう人のせい
-
-自分はどうですか？
-
-弱虫 欲望不安に
-
-くらくらきてないの？
-
-HateMySelf 生きて生きてたどり着いた
-<span class="call">（りりな×4）</span>
-
-LoveMySelf 今夜も
-<span class="call">（まりあ×2）</span>
-
-<span class="call">（イェッタイガーファイボワイパー）</span>
-
-光っている 50:50 Night
-
-翳っている 50:50 Night
-
-天使と悪魔がまた手を繋いでる
-<span class="call">（はいせーのはいせーのおーいおいおいおいおい）</span>
-
-踊っている 50:50 Night
-
-塞いでいる 50:50 Night
-
-感情がブレる でもでも全部私
-
-パラドクスナイト
-
-<span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞ虎火人造繊維海女振動化繊）</span> ※日本語MIX
-
-「ほんとにもう無理。」
-
-「誰も信用できない。」
-
-「愛したいだけなのに」
-
-絶望切望 無い希望
-
-諦めかけたのに
-
-無条件な思いやりが
-
-ハテナを置いてった
-
-戸惑い後悔 自己否定
-
-ゆらゆらゆらゆら 今夜も
-
-動いている 50:50 Night
-
-止まっている 50:50 Night
-
-天使と悪魔がまだ手を繋いでる
-<span class="call">（はいせーのはいせーのおーいおいおいおい）</span>
-
-歌っている 50:50 Night
-
-黙っている 50:50 Night
-
-人間のウラとオモテが胸を刺す
-
-パラドクスナイト
-
-<span class="call">（言いたいことがあるんだよ！やっぱり〇〇可愛いよ！好き好き大好きやっぱ好き！やっと見つけたお姫様！俺が生まれて来た理由！それは〇〇に出会うため！俺と一緒に人生歩もう世界で1番愛してる！）</span>
-
-50:50 Night前向いて
-
-50:50 Night 無理やっぱ
-
-脳内フラフラ
-
-それでも生きている
-
-光っている 50:50 Night
-
-翳っている 50:50 Night
-
-天使と悪魔がまた手を繋いでる
-
-踊っている 50:50 Night
-
-塞いでいる 50:50 Night
-
-感情がブレる でもでも全部私
-
-パラドクスナイト
-<span class="call">（世界で1番愛してやまない〇〇に捧げるチャペ虎タイガー チャペ×8 I Love You）</span>
-      </div>
-    </div>
+  <!-- YouTube 埋め込みプレイヤー（API制御用に id="player" を付与） -->
+  <div style="width: 100%; max-width: 560px; margin: 0 auto 20px auto; border-radius: 12px; overflow: hidden;">
+    <div id="player"></div>
   </div>
 
-</body>
+  <!-- タイムスタンプ付きコール表 -->
+  <div class="lyrics">
+    <div class="call-block" data-start="0" data-end="10">
+      <span class="time-label">0:00~</span>
+      <span class="call">（ミョーホントゥスケ化繊飛除去ジャージャファイボワイパー）</span>
+    </div>
+
+    <div class="call-block" data-start="65" data-end="75">
+      <span class="time-label">1:05~</span> 【1番サビ前】<br>
+      〜〜朝まで目が覚めるまで<br>
+      <span class="call">（ひまりコール：ひまり×4）</span>
+    </div>
+
+    <div class="call-block" data-start="80" data-end="95">
+      <span class="time-label">1:20~</span> 【1番サビ】<br>
+      〜〜そんくらいが <span class="call">（はいせーのはいせーの）</span><br>
+      〜〜ちょうどいいかもね <span class="call">（おーいおいおいおいおいおい）</span>
+    </div>
+  </div>
+</div>
+
+<!-- スタイル（ハイライト表示用） -->
+<style>
+  .call-block {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s, border-left 0.3s;
+    border-left: 4px solid transparent;
+  }
+  /* 再生中のハイライトCSS */
+  .call-block.active {
+    background-color: #ffe6ed; /* 薄いピンク背景 */
+    border-left: 4px solid var(--primary-color, #ff4785);
+    font-weight: bold;
+  }
+  .time-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-right: 6px;
+  }
+</style>
+
+<!-- YouTube IFrame Player API の制御スクリプト -->
+<script>
+  // 1. YouTube APIの読み込み
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '315',
+      width: '560',
+      videoId: '4pcqsORvThE', // ★対象の動画IDに差し替えてください
+      playerVars: { 'playsinline': 1 },
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  var checkTimer = null;
+
+  // 再生状態に合わせてタイマーを制御
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+      // 0.5秒ごとに再生時間をチェック
+      checkTimer = setInterval(updateHighlight, 500);
+    } else {
+      clearInterval(checkTimer);
+    }
+  }
+
+  // 再生時間に応じてハイライトを切り替える関数
+  function updateHighlight() {
+    if (!player || !player.getCurrentTime) return;
+    var currentTime = player.getCurrentTime();
+    var blocks = document.querySelectorAll('.call-block');
+
+    blocks.forEach(function(block) {
+      var start = parseFloat(block.getAttribute('data-start'));
+      var end = parseFloat(block.getAttribute('data-end'));
+
+      if (currentTime >= start && currentTime < end) {
+        block.classList.add('active');
+      } else {
+        block.classList.remove('active');
+      }
+    });
+  }
+</script>
 </html>

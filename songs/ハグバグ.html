@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ハグバグ - コールガイド</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* ハイライト用のスタイル */
+    .call-block {
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s, border-left 0.3s;
+      border-left: 4px solid transparent;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    .call-block.active {
+      background-color: #ffe6ed; /* ハイライト背景色 */
+      border-left: 4px solid var(--primary-color, #ff4785);
+    }
+    .time-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #888;
+      margin-right: 8px;
+    }
+    .guide-text {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="../index.html">← トップへ戻る</a>
+  </header>
+
+  <div class="container">
+    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
+
+    <div class="card">
+      <h1 class="song-title">ハグバグ</h1>
+
+      <!-- YouTube API プレーヤー表示エリア -->
+      <div style="width: 100%; max-width: 560px; margin: 0 auto 20px auto; border-radius: 12px; overflow: hidden;">
+        <div id="player"></div>
+      </div>
+
+      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト等をご確認ください。
+      </div>
+
+      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
+      <div class="lyrics">
+
+        <!-- イントロ -->
+        <div class="call-block" data-start="0" data-end="15">
+          <span class="time-label">0:00~</span>【イントロ】<br>
+          「ハグバグして？」直後<br>
+          <span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃー）</span><br>
+          ハグバグ♡<br>
+          <span class="call">（タイガーファイヤーサイバーファイバーダイバーバイバージャージャー）</span> ※スタンダードMIX
+        </div>
+
+        <!-- Aメロ -->
+        <div class="call-block" data-start="16" data-end="35">
+          <span class="time-label">0:16~</span>【Aメロ】<br>
+          TapTapTap ♡ <span class="call">（👏👏👏）</span><br>
+          <span class="call">（用水路👏コンバイン👏りりなの様子が👏おかしいー）</span>
+        </div>
+
+        <!-- Bメロ -->
+        <div class="call-block" data-start="36" data-end="50">
+          <span class="time-label">0:36~</span>【Bメロ】<br>
+          〜〜朝まで目が覚めるまで<br>
+          <span class="call">（みんなで一緒にひまりコール：ひまり×4）</span><br>
+          〜〜全て捧げるの<br>
+          <span class="call">（イェイェイェッタイガー）</span>
+        </div>
+
+        <!-- 1番サビ -->
+        <div class="call-block" data-start="51" data-end="70">
+          <span class="time-label">0:51~</span>【1番サビ】<br>
+          〜〜そんくらいが <span class="call">（はいせーのはいせーの）</span><br>
+          〜〜ちょうどいいかもね <span class="call">（おーいおいおいおいおいおい）</span>
+        </div>
+
+        <!-- 間奏（2番前） -->
+        <div class="call-block" data-start="71" data-end="85">
+          <span class="time-label">1:11~</span>【間奏】<br>
+          「ハグバグして？」直後<br>
+          <span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃー）</span><br>
+          ハグバグ♡<br>
+          <span class="call">（虎火人造繊維海女振動化繊）</span> ※日本語MIX
+        </div>
+
+        <!-- 2番Aメロ〜Bメロ -->
+        <div class="call-block" data-start="86" data-end="120">
+          <span class="time-label">1:26~</span>【2番A/Bメロ】<br>
+          〜〜Death DeathDeath× <span class="call">（death death death）</span><br>
+          〜〜朝まで目が覚めるまで<br>
+          <span class="call">（みんなで一緒にモカちゃんコール：モカちゃん×4）</span><br>
+          〜〜何も言わないで<br>
+          <span class="call">（イェイェイェッタイガー）</span>
+        </div>
+
+        <!-- 間奏（倍速・カオスパート） -->
+        <div class="call-block" data-start="121" data-end="150">
+          <span class="time-label">2:01~</span>【間奏】<br>
+          「ハグバグして？」<span class="call">（虎虎行くぞ）</span><br>
+          <span class="call">（虎×12 虎火 人造繊維海女振動化繊飛除去）</span><br>
+          <span class="call">（ワールドカオス：わ×6ワールドカオス諸行小暮時雨神楽金剛山翔襲叉）</span>
+        </div>
+
+        <!-- アウトロ -->
+        <div class="call-block" data-start="151" data-end="180">
+          <span class="time-label">2:31~</span>【アウトロ】<br>
+          「ハグバグして？」直後<br>
+          <span class="call">（うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃー）</span><br>
+          ハグバグ♡<br>
+          <span class="call">（チャペアペカラキナララトゥスケミョーホントゥスケ）</span> ※アイヌ語MIX
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame Player API スクリプト -->
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '560',
+        videoId: '4pcqsORvThE?si=8nVZMOJRGoZ4DNpm', // ★実際のYouTube動画IDに書き換えてください
+        playerVars: { 
+          'playsinline': 1,
+          'rel': 0
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    var checkTimer = null;
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        // 再生中は0.3秒ごとに時間をチェック
+        checkTimer = setInterval(updateHighlight, 300);
+      } else {
+        clearInterval(checkTimer);
+      }
+    }
+
+    function updateHighlight() {
+      if (!player || !player.getCurrentTime) return;
+      var currentTime = player.getCurrentTime();
+      var blocks = document.querySelectorAll('.call-block');
+
+      blocks.forEach(function(block) {
+        var start = parseFloat(block.getAttribute('data-start'));
+        var end = parseFloat(block.getAttribute('data-end'));
+
+        if (currentTime >= start && currentTime < end) {
+          block.classList.add('active');
+        } else {
+          block.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
