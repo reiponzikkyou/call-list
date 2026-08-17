@@ -30,49 +30,39 @@ header a { color: white; text-decoration: none; font-weight: bold; }
 
 .container {
   max-width: 600px;
-  margin: 20px auto;
-  padding: 0 16px;
+  width: 100%;             /* 幅いっぱいに広げる */
+  margin: 20px auto;       /* 上下20px、左右autoで中央寄せ */
+  padding: 0 16px;         /* スマホ端にくっつかないよう左右に少し余白 */
+  box-sizing: border-box;
 }
 
-/* 楽曲リスト（トップページ用） */
-.song-list {
-  list-style: none;
-}
-.song-item {
-  background: var(--card-bg);
-  margin-bottom: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  transition: transform 0.1s;
-}
-.song-item a {
-  display: block;
-  padding: 16px;
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: bold;
-}
-.song-item:hover { transform: translateY(-2px); }
-
-/* 個別ページ用 */
 .card {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   margin-bottom: 20px;
+  margin-left: auto;       /* 明示的に中央寄せを設定 */
+  margin-right: auto;
+  width: 100%;             /* コンテナの幅に合わせる */
 }
-.song-title {
-  font-size: 1.3rem;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  color: var(--primary-color);
-}
+
+/* 動画埋め込み部分の中央揃えとスマホ溢れ防止 */
 .media-container {
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto; /* 下マージンを保ちつつ左右中央 */
   border-radius: 12px;
   overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* 中のiframeも中央に寄せる */
+}
+
+.media-container iframe {
+  width: 100%;
+  max-width: 100%;          /* はみ出し防止 */
+  aspect-ratio: 16 / 9;     /* 縦横比を16:9に固定 */
+  height: auto;
+  border: 0;
 }
 .lyrics { font-size: 1rem; white-space: pre-line; }
 .call { color: var(--call-color); font-weight: bold; }
