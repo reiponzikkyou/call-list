@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chu♡Key×Chu♡Key - コールガイド</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
+    .media-container {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .media-container iframe {
+      width: 100% !important;
+      aspect-ratio: 16 / 9;
+      height: auto !important;
+      display: block;
+      border: none;
+    }
+
+    /* ハイライト用のスタイル */
+    .call-block {
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s, border-left 0.3s;
+      border-left: 4px solid transparent;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    .call-block.active {
+      background-color: #ffe6ed; /* ハイライト背景色 */
+      border-left: 4px solid var(--primary-color, #ff4785);
+    }
+    .time-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #888;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="../index.html">← トップへ戻る</a>
+  </header>
+
+  <div class="container">
+    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
+
+    <div class="card">
+      <h1 class="song-title">Chu♡Key×Chu♡Key</h1>
+
+      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
+      <div class="media-container">
+        <div id="player"></div>
+      </div>
+
+      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+      </div>
+
+      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
+      <div class="lyrics">
+
+        <!-- イントロ1 -->
+        <div class="call-block" data-start="0" data-end="0">
+          <span class="time-label">0:00~</span>
+          <span class="call">
+
+            <br>私さえ知らない私のこと
+
+            <br>「冒険しましょ？」
+            <br>(トーマスゴードンヘンリーパーシードビーエドワードぽっぽー)
+            <br>Chu♡Key Choose♡Key
+
+            <br>Chu♡Me Choose♡Me
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>My♡Darling
+
+            <br>はぁ今日もかわいいに大忙し
+
+            <br>SNSはキラッ
+
+            <br>鍵垢稼働もMax 
+            <br>(Max！)
+
+            <br>あなたがいるせい？
+
+            <br>いやいなくたって一緒
+
+            <br>だって女の子だもん
+
+            <br>ある日はビジュ最強くかも 
+
+            <br>ある日はマジ鬱グラグラ 
+
+            <br>嘘じゃなくて矛盾しちゃうって
+
+            <br>かわいい
+
+            <br>女の子は複雑なの
+
+            <br>ウラウラのウラオモテ
+
+            <br>かわいくありたい。
+
+            <br>でもかわいくないのもかわいかった
+
+            <br>でもかわいくないのもかわいかったり？
+
+            <br>もはやこりゃミステリ～
+
+            <br>「一緒に解き明かして？」
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>開けてよDarling♡
+            <br>(おーふっふー↓)
+            <br>ダイヤルは？ってそういうとこ 
+            <br>(👏👏フワフワ)
+            <br>Chu♡Key Chu♡Key
+            <br>(はいせーのはいせーの)
+            <br>かわいいもそうじゃないとこも 
+            <br>(おーいおいおいおいおい)
+            <br>私なの
+
+            <br>扉の向こうにはね
+
+            <br>きっとキケンなワンダーランド
+
+            <br>私さえ知らない私のこと「せーの、冒険しましょ？」
+
+            <br>鍵をかけたらもう戻れないかも
+
+            <br>私とChu♡Key♡Chu
+
+            <br>昔のえらい人
+
+            <br>こんな感じのこと言ってた
+
+            <br>「人間は生まれた時からピュアカワイイ｣
+            <br>（ピュアカワイイ！）
+
+            <br>そう！あなたもキミも
+
+            <br>その隣、あのおじさんも！？
+
+            <br>もしかしてプリンセス！？
+
+            <br>「流石にか...？」
+
+            <br>はじめはみんな真っ白なら
+
+            <br>おしゃれし甲斐があるもんね 
+
+            <br>神様って案外女の子だったり？
+
+            <br>女の子は単純なの
+
+            <br>その言葉が欲しいだけ
+
+            <br>なーんでこんな簡単な事がわかんないかな〜
+
+            <br>待ちきれないんだけど？
+
+            <br>「答えは教えなーいけど」
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>開けてよDarling 
+            <br>(おーふっふー↓)
+            <br>不器用でも頑張るってCute 
+            <br>(👏👏フワフワ)
+            <br>Chu♡Key Chu♡Key
+            <br>(はいせーのはいせーの)
+            <br>かわいいもそうじゃないとこも 
+            <br>(おーいおいおいおいおい)
+            <br>あなたなの 
+
+            <br>白があって黒がある
+
+            <br>光あって闇になる
+
+            <br>あなたさえ知らないあなたのこと
+
+            <br>「せーの、一緒に探そ？」
+
+            <br>なんとなく近づいて来たでしょ？
+
+            <br>あなたと Chu♡Key♡Chu
+            <br>(人造ファイヤファイボワイパータイガータイガータタタタタイガーチャペアペカラキナチャペアペカラキナミョーホントゥスケ👏ワイパーファイヤーファイヤー虎虎カラキナチャペアペファーマー海女海女ジャスパー虎タイガー虎タイガー人造繊維イェッタイガー(倍速))
+            <br>(Chu♡Key♡Chu!)
+
+            <br>かわいいなって
+
+            <br>愛おしいなって
+
+            <br>心病める時も心健やかなる時も
+
+            <br>私・あなたってちょーかわいい！
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>見つけた？Darling
+            <br>(タイガーファイバーサイバーファイバーダイバーバイバージャージャー(倍速))
+            <br>「心の準備は、できてる」
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>開けてよDarling
+            <br>(虎火人造繊維(倍速))
+            <br>「私のこと Chu♡Key？」
+            <br>(Chu♡Key!)
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>開けてよDarling 《Chu！》
+            <br>(おーふっふー↓)
+            <br>ダイヤルは？ってそういうとこ （はあ）
+            <br>(👏👏フワフワ)
+            <br>Chu♡Key Chu♡Key
+            <br>(はいせーのはいせーの)
+            <br>かわいいもそうじゃないとこも 《It's me!》
+            <br>(おーいおいおいおいおい)
+            <br>私なの（Yes！）
+
+            <br>扉の向こうにはね
+
+            <br>きっとキケンなワンダーランド
+
+            <br>私さえ知らない私のこと
+
+            <br>「せーの、冒険しましょ？」
+
+            <br>鍵をかけたらもう戻れないかも
+
+            <br>私とChu♡Key♡Chu(Chu♡Key!)
+
+            <br>Chu♡Key♡Chu (Chu♡Key!)
+
+            <br>もっと好きになる
+
+            <br>私とChu♡Key♡Chu
+
+            <br>Chu♡Key Choose♡Key
+
+            <br>Chu♡Me Choose♡Me
+
+            <br>Chu♡Key Chu♡Key
+
+            <br>My♡Darling
+
+            <br>Chu♡
+
+
+
+            <br>入ってるコール(上から順)
+            <br>・トーマスMIX
+            <br>・可変3連
+            <br>・スタンダードMIX(倍速)
+            <br>・日本語MIX(倍速)
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame Player API スクリプト -->
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '560',
+        videoId: 'Kuht1mw5ni4', // ★対象の11桁の動画ID
+        playerVars: { 
+          'playsinline': 1,
+          'rel': 0
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    var checkTimer = null;
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        checkTimer = setInterval(updateHighlight, 300);
+      } else {
+        clearInterval(checkTimer);
+      }
+    }
+
+    function updateHighlight() {
+      if (!player || !player.getCurrentTime) return;
+      var currentTime = player.getCurrentTime();
+      var blocks = document.querySelectorAll('.call-block');
+
+      blocks.forEach(function(block) {
+        var start = parseFloat(block.getAttribute('data-start'));
+        var end = parseFloat(block.getAttribute('data-end'));
+
+        if (currentTime >= start && currentTime < end) {
+          block.classList.add('active');
+        } else {
+          block.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
