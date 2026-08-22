@@ -71,6 +71,46 @@ header a {
   box-sizing: border-box;
 }
 
+/* トップページのトピック一覧リスト */
+.topics-list {
+  list-style: none;
+}
+
+.topics-item {
+  /* background: var(--card-bg); */
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.1s;
+  /* 背景画像の設定 */
+  background-image: url('image/IMG_8861.JPG'); /* 画像のパスを指定 */
+  
+  /* 画像の表示方法を綺麗に整える推奨設定 */
+  background-size: cover;       /* コンテナ全体を覆うように拡大縮小 */
+  background-position: center;  /* 画像の中央を表示 */
+  background-repeat: no-repeat; /* 画像の繰り返し表示を防ぐ */
+
+  /* 必要に応じてコンテナのサイズを指定 */
+  width: 100%;
+  min-height: 200px;
+  
+}
+
+.topics-item a {
+  display: block;
+  padding: 12px 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.topics-item:hover {
+  transform: translateY(-2px);
+}
+
+
+
+
 /* トップページの曲一覧リスト */
 .song-list {
   list-style: none;
@@ -197,4 +237,97 @@ header a {
   height: auto !important;
   display: block;
   border: 0;
+}
+
+/* ==========================================================================
+   7. トピック・イベント告知用スタイル
+   ========================================================================== */
+.section-heading {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topic-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.topic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.topic-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.topic-date {
+  font-size: 0.82rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.topic-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: white;
+  background: var(--primary-color);
+}
+
+.topic-badge.badge-live {
+  background: #ff4785;
+}
+
+.topic-badge.badge-event {
+  background: #f59e0b;
+}
+
+.topic-badge.badge-news {
+  background: #3b82f6;
+}
+
+.topic-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.topic-desc {
+  font-size: 0.83rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.topic-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.topic-link:hover {
+  text-decoration: underline;
 }
