@@ -117,26 +117,44 @@ header a {
   color: var(--primary-color);
 }
 
+.notice {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
 .lyrics {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
 }
 
+.lyrics-text {
+  color: var(--text-color);
+  margin: 2px 0;
+}
+
 .call {
   color: var(--call-color);
   font-weight: bold;
+  margin-top: 2px;
 }
 
 /* コールブロック間の上下間隔をコンパクトに設定 */
 .call-block {
-  padding: 6px 10px;
-  margin: 0;              /* 余白を完全ゼロに */
-  border-radius: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* 不要なら消去 */
-  transition: background-color 0.3s, border-left 0.3s;
+  padding: 8px 10px;
+  margin: 0;
+  border-radius: 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s, border-left 0.2s;
   border-left: 4px solid transparent;
   background-color: transparent;
+  cursor: pointer;
+}
+
+.call-block:hover {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 /* 動画再生時のハイライト */
