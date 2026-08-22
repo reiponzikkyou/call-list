@@ -5,44 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>残り火 - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
-    .media-container {
-      width: 100%;
-      max-width: 560px;
-      margin: 0 auto 20px auto;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .media-container iframe {
-      width: 100% !important;
-      aspect-ratio: 16 / 9;
-      height: auto !important;
-      display: block;
-      border: none;
-    }
-
-    /* ハイライト用のスタイル */
-    .call-block {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      transition: background-color 0.3s, border-left 0.3s;
-      border-left: 4px solid transparent;
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-    .call-block.active {
-      background-color: #ffe6ed; /* ハイライト背景色 */
-      border-left: 4px solid var(--primary-color, #ff4785);
-    }
-    .time-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #888;
-      margin-right: 8px;
-    }
-  </style>
 </head>
 <body>
 
@@ -56,120 +18,28 @@
     <div class="card">
       <h1 class="song-title">残り火</h1>
 
-      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
       <div class="media-container">
         <div id="player"></div>
       </div>
 
-      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+      <div class="notice">
         ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
       </div>
 
-      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
-      <div class="lyrics">
-
-        <!-- イントロ1 -->
-        <div class="call-block" data-start="0" data-end="0">
-          <span class="time-label">0:00~</span>
-          <span class="call">
-            <br>燃え尽きた身体灰になった記憶
-            <br>(うっおいうっおいうっおい👏 👏👏 👏 👏しゃー行くぞタイガーファイヤーサイバーファイバーダイバーバイバージャージャー虎火人造繊維海女振動化繊チャペアペカラキナララトゥスケミョーホントゥスケ)
-            <br>捨て身で燃え尽きた
-            <br>残りの熱も全部君に渡す
-            <br>(うっおいうっおいうっおいうっおいおーーおいおいおいおい)
-            <br>壊れる未来も全部選んでる
-            <br>(うっおいうっおいうっおいうっおいおーーおいおいおいおい)
-            <br>君に預けたい求めたい not yours
-            <br>(農場 舞 海鵜 跳 除去飛化繊振動海女繊維人造火 ！虎 ！火 ！虎 ！火 ！虎虎虎虎 虎火人造海女振動 ！海女振海女震海女振動！ 海女繊維海女繊維人造火 ！虎火人造繊維 👏海女！振動！化繊！飛！除去！跳！海鵜！舞！農場！)
-            <br>存在の残量 全部君に渡す
-            <br>（うっおいうっおいうっおいうっおいおーーおいおいおいおい)
-            <br>君に溺れたい呑まれたいI'm yours
-            <br>(わ×6ワールドカオス 諸行 小暮 時雨 神楽 金剛山 翔襲叉
-            <br>しょ×6翔襲叉 金剛山 神楽 時雨 小暮 諸行 ワールドカオス)
-            <br>炎強く燃える
-            <br>(キタキタキタキタ 湧いてきた
-            <br>タイガー タイガー タイガーショット
-            <br>虎タイ 虎タイ虎タイガー
-            <br>人造繊維イエッタイガー
-            <br>ジャッジャー ジャッジャーバリバリボー
-            <br>ストスト ストストストライカー
-            <br>カール ハインツシュナイダー
-            <br>スカイ ラブハリケーン)
-            <br>存在の残量 全部君に渡す
-            <br>(うっおいうっおいうっおいうっおいおーーおいおいおいおい)
-            <br>君に溺れたい呑まれたい I'm yours
-            <br>(銀河に轟く歌声と地球に花咲くその笑顔
-            <br>お前が好きだと輝き叫ぶ行くぜ全力どこまでも
-            <br>光の如く駆け巡る好きじゃねぇ愛してる
-            <br>インジョ ジャスパー ビブラル イェッナルダ ファボリアスター)
-            <br>
-            <br>入ってるコール(上から順)
-            <br>・スタンダードMIX
-            <br>・日本語MIX
-            <br>・アイヌ語MIX
-            <br>・アッチェレ
-            <br>・ワールドカオス
-            <br>・ワールドカオス逆打ち
-            <br>・キャプ翼MIX
-            <br>・銀河口上
-            <br>・ファボリアスター
-          </span>
-        </div>
-
-      </div>
+      <div class="lyrics" id="call-list-container"></div>
     </div>
   </div>
 
-  <!-- YouTube IFrame Player API スクリプト -->
+  <script src="../player.js"></script>
   <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: 'HnK9kA2CdFw', // ★対象の11桁の動画ID
-        playerVars: { 
-          'playsinline': 1,
-          'rel': 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    var checkTimer = null;
-
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        checkTimer = setInterval(updateHighlight, 300);
-      } else {
-        clearInterval(checkTimer);
-      }
-    }
-
-    function updateHighlight() {
-      if (!player || !player.getCurrentTime) return;
-      var currentTime = player.getCurrentTime();
-      var blocks = document.querySelectorAll('.call-block');
-
-      blocks.forEach(function(block) {
-        var start = parseFloat(block.getAttribute('data-start'));
-        var end = parseFloat(block.getAttribute('data-end'));
-
-        if (currentTime >= start && currentTime < end) {
-          block.classList.add('active');
-        } else {
-          block.classList.remove('active');
-        }
-      });
-    }
+    initCallGuide({
+      videoId: "HnK9kA2CdFw",
+      calls: [
+        { start: "0:10", end: "0:30", lyrics: "灰になった記憶", call: "うっおいうっおいうっおい\n👏 👏👏 👏 👏\nしゃー行くぞタイガーファイヤーサイバーファイバーダイバーバイバージャージャー\n虎火人造繊維海女振動化繊\nチャペアペカラキナララトゥスケミョーホントゥスケ" }
+      ]
+    });
   </script>
 
 </body>

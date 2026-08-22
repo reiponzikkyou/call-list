@@ -128,17 +128,23 @@ header a {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
+  min-width: 0;
+  width: 100%;
 }
 
 .lyrics-text {
   color: var(--text-color);
   margin: 2px 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .call {
   color: var(--call-color);
   font-weight: bold;
   margin-top: 2px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* コールブロック間の上下間隔をコンパクトに設定 */
@@ -151,6 +157,9 @@ header a {
   border-left: 4px solid transparent;
   background-color: transparent;
   cursor: pointer;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .call-block:hover {
