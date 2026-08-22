@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:; script-src * 'unsafe-inline' 'unsafe-eval' blob:; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:; script-src * 'unsafe-inline' 'unsafe-eval' blob: https://www.youtube.com https://s.ytimg.com; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline' https:; frame-src * https://www.youtube.com; style-src * 'unsafe-inline';">
   <title>コール辞書ジェネレーター - Call Guide Studio</title>
   <style>
     :root {
@@ -157,16 +157,16 @@
       font-family: monospace;
       font-weight: bold;
       color: #2d3748;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
     .current-time-display {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: var(--primary-color);
       font-family: monospace;
     }
     .call-items-list {
-      max-height: 320px;
+      max-height: 340px;
       overflow-y: auto;
       border: 1px solid #eee;
       border-radius: 6px;
@@ -316,8 +316,8 @@
         </div>
 
         <!-- YouTube Player -->
-        <div class="media-container" id="player-container">
-          <iframe id="yt-iframe" src="https://www.youtube-nocookie.com/embed/L-VMYQ1v-vM?enablejsapi=1&playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="media-container">
+          <div id="player"></div>
         </div>
 
         <!-- 再生コントローラー & 現在時間 -->
@@ -426,7 +426,9 @@
   <!-- トースト通知 -->
   <div id="toast" class="toast">コピーしました！</div>
 
-  <!-- スクリプト -->
+  <!-- YouTube IFrame API スクリプト -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script>
     // VS Code Webview 連携
     var vscode = null;
@@ -444,7 +446,7 @@
     var currentTab = 'calls';
     var ytPlayer = null;
     var timerInterval = null;
-    var currentTimeSec = 0;
+    var lastKnownTime = 0;
 
     // ブラウザで開く機能
     function openExternalBrowser() {
@@ -455,66 +457,53 @@
       }
     }
 
-    // YouTube iframe postMessage コマンド送信
-    function sendYtCommand(func, args) {
-      var iframe = document.getElementById('yt-iframe');
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: func,
-          args: args || []
-        }), '*');
-      }
-    }
-
-    // YouTubeからの postMessage 受信（時間同期）
-    window.addEventListener('message', function(event) {
-      try {
-        var data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-        if (data && data.event === 'infoDelivery' && data.info) {
-          if (typeof data.info.currentTime === 'number') {
-            currentTimeSec = data.info.currentTime;
-            document.getElementById('current-time-text').textContent = formatSeconds(currentTimeSec);
-          }
-        }
-      } catch(e) {}
-    });
-
     // YouTube IFrame API 初期化
-    function initYouTube() {
-      var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      if (firstScriptTag && firstScriptTag.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      } else {
-        document.head.appendChild(tag);
+    window.onYouTubeIframeAPIReady = function() {
+      createPlayer('L-VMYQ1v-vM');
+    };
+
+    function createPlayer(videoId) {
+      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+        try { ytPlayer.destroy(); } catch(e) {}
       }
+
+      ytPlayer = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: videoId,
+        playerVars: {
+          'playsinline': 1,
+          'rel': 0,
+          'enablejsapi': 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
     }
 
-    window.onYouTubeIframeAPIReady = function() {
-      try {
-        ytPlayer = new YT.Player('yt-iframe', {
-          events: {
-            'onReady': function() {
-              startTimer();
-            }
-          }
-        });
-      } catch(e) {}
-    };
+    function onPlayerReady(event) {
+      startTimer();
+    }
+
+    function onPlayerStateChange(event) {
+      startTimer();
+    }
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(function() {
         if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-          var sec = ytPlayer.getCurrentTime();
-          if (!isNaN(sec)) {
-            currentTimeSec = sec;
-            document.getElementById('current-time-text').textContent = formatSeconds(sec);
-          }
+          try {
+            var sec = ytPlayer.getCurrentTime();
+            if (typeof sec === 'number' && !isNaN(sec)) {
+              lastKnownTime = sec;
+              document.getElementById('current-time-text').textContent = formatSeconds(sec);
+            }
+          } catch(e) {}
         }
-      }, 200);
+      }, 150);
     }
 
     function formatSeconds(sec) {
@@ -525,7 +514,7 @@
     }
 
     function extractVideoId(input) {
-      var str = input.trim();
+      var str = (input || '').trim();
       var match = str.match(/(?:v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
       return match ? match[1] : (str.length === 11 ? str : str);
     }
@@ -535,44 +524,46 @@
       var vid = extractVideoId(input);
       if (vid) {
         document.getElementById('video-id-input').value = vid;
-        var iframe = document.getElementById('yt-iframe');
-        iframe.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?enablejsapi=1&playsinline=1&rel=0';
+        if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+          ytPlayer.loadVideoById(vid);
+        } else {
+          createPlayer(vid);
+        }
         showToast('動画を読み込みました');
         updateOutput();
       }
     }
 
     function togglePlayPause() {
-      if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
-        var state = ytPlayer.getPlayerState();
-        if (state === YT.PlayerState.PLAYING) {
-          ytPlayer.pauseVideo();
-        } else {
-          ytPlayer.playVideo();
-        }
+      if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+      var state = ytPlayer.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        ytPlayer.pauseVideo();
       } else {
-        // postMessageフォールバック
-        sendYtCommand('playVideo');
+        ytPlayer.playVideo();
       }
     }
 
     function seekRelative(offset) {
-      var cur = (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') ? ytPlayer.getCurrentTime() : currentTimeSec;
+      if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+      var cur = ytPlayer.getCurrentTime() || lastKnownTime;
       var target = Math.max(0, cur + offset);
-      if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
-        ytPlayer.seekTo(target, true);
-      } else {
-        sendYtCommand('seekTo', [target, true]);
-      }
+      ytPlayer.seekTo(target, true);
     }
 
     function setCurrentTimeToStart() {
-      var cur = (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') ? ytPlayer.getCurrentTime() : currentTimeSec;
+      var cur = 0;
+      if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+        cur = ytPlayer.getCurrentTime() || lastKnownTime;
+      }
       document.getElementById('start-time-input').value = formatSeconds(cur);
     }
 
     function setCurrentTimeToEnd() {
-      var cur = (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') ? ytPlayer.getCurrentTime() : currentTimeSec;
+      var cur = 0;
+      if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+        cur = ytPlayer.getCurrentTime() || lastKnownTime;
+      }
       document.getElementById('end-time-input').value = formatSeconds(cur);
     }
 
@@ -584,7 +575,7 @@
       var call = document.getElementById('call-input').value.trim();
 
       if (!start || !end) {
-        alert('開始時間と終了時間は必須です');
+        alert('開始時間と終了時間は必須です（例: 0:07, 0:13）');
         return;
       }
       if (!call) {
@@ -627,8 +618,6 @@
       var sec = parseTimeToSec(item.start);
       if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
         ytPlayer.seekTo(sec, true);
-      } else {
-        sendYtCommand('seekTo', [sec, true]);
       }
     }
 
@@ -664,10 +653,9 @@
       var sec = parseTimeToSec(item.start);
       if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
         ytPlayer.seekTo(sec, true);
-        ytPlayer.playVideo();
-      } else {
-        sendYtCommand('seekTo', [sec, true]);
-        sendYtCommand('playVideo');
+        if (typeof ytPlayer.playVideo === 'function') {
+          ytPlayer.playVideo();
+        }
       }
     }
 
@@ -873,8 +861,7 @@
     document.getElementById('song-title-input').addEventListener('input', updateOutput);
     document.getElementById('video-id-input').addEventListener('input', updateOutput);
 
-    // YouTube初期化
-    initYouTube();
+    // 初期描画
     updateOutput();
   </script>
 </body>

@@ -50,15 +50,11 @@ function activate(context) {
       currentPanel.webview.html = htmlContent;
 
       // Webviewからのメッセージ受信（エディタ挿入など）
-      // Webviewからのメッセージ受信（エディタ挿入、ブラウザ起動など）
       currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
             case 'insertCode':
               insertCodeToEditor(message.text);
-              return;
-            case 'openInBrowser':
-              vscode.env.openExternal(vscode.Uri.file(editorHtmlPath));
               return;
           }
         },
