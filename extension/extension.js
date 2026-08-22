@@ -31,8 +31,15 @@ function activate(context) {
         }
       );
 
-      // HTMLの読み込み
-      const editorHtmlPath = path.join(context.extensionPath, '..', 'tools', 'editor.html');
+      // HTMLの読み込み（複数パス候補に対応）
+      let editorHtmlPath = path.join(context.extensionPath, '..', 'tools', 'editor.html');
+      if (!fs.existsSync(editorHtmlPath)) {
+        editorHtmlPath = path.join(context.extensionPath, 'editor.html');
+      }
+      if (!fs.existsSync(editorHtmlPath)) {
+        editorHtmlPath = path.join(context.extensionPath, 'tools', 'editor.html');
+      }
+
       let htmlContent = '';
       try {
         htmlContent = fs.readFileSync(editorHtmlPath, 'utf8');
@@ -43,11 +50,15 @@ function activate(context) {
       currentPanel.webview.html = htmlContent;
 
       // Webviewからのメッセージ受信（エディタ挿入など）
+      // Webviewからのメッセージ受信（エディタ挿入、ブラウザ起動など）
       currentPanel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
             case 'insertCode':
               insertCodeToEditor(message.text);
+              return;
+            case 'openInBrowser':
+              vscode.env.openExternal(vscode.Uri.file(editorHtmlPath));
               return;
           }
         },

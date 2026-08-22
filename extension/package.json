@@ -3,13 +3,17 @@
   "displayName": "アイドルコール辞書エディタ (Call Guide Studio)",
   "description": "YouTube動画を見ながら再生範囲・歌詞・コールを入力して辞書コードを自動生成するVS Code拡張機能",
   "version": "1.0.0",
+  "publisher": "call-guide",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:callGuide.openEditor",
+    "*"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
@@ -24,11 +28,9 @@
       "editor/title": [
         {
           "command": "callGuide.openEditor",
-          "when": "resourceExtname == .html || resourceExtname == .js",
           "group": "navigation"
         }
       ]
     }
   }
 }
-
