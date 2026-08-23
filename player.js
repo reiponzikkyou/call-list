@@ -1,16 +1,10 @@
 /**
  * コールガイド共通スクリプト (player.js)
- * 楽曲の辞書データをもとにコール表を動的に生成し、YouTube動画の再生と連動させます。
  */
 
 var ytPlayer = null;
 var checkTimer = null;
 
-/**
- * 時間表記（"0:07", "1:23", 7 など）を秒数（数値）にパース
- * @param {string|number} time 
- * @returns {number} 秒数
- */
 function parseTimeToSeconds(time) {
   if (typeof time === 'number') return time;
   if (!time) return 0;
@@ -24,20 +18,12 @@ function parseTimeToSeconds(time) {
   return parseFloat(str) || 0;
 }
 
-/**
- * 秒数から表示用時間文字列（"0:07~" など）を自動生成
- * @param {number} startSec 
- * @returns {string} 表示用時間文字列
- */
 function formatSecondsToDisplay(startSec) {
   var min = Math.floor(startSec / 60);
   var sec = Math.floor(startSec % 60);
   return min + ':' + (sec < 10 ? '0' : '') + sec + '~';
 }
 
-/**
- * HTMLエスケープ処理
- */
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str)
@@ -48,9 +34,6 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-/**
- * 改行や配列をHTMLフォーマットに変換
- */
 function formatContent(content) {
   if (Array.isArray(content)) {
     return content.map(function(line) {
@@ -61,14 +44,6 @@ function formatContent(content) {
   return escapeHtml(String(content)).replace(/\n/g, '<br>');
 }
 
-/**
- * コールガイドの初期化
- * @param {Object} config
- * @param {string} config.videoId - YouTubeの動画ID (11桁)
- * @param {Array<Object>} config.calls - コールデータの辞書配列
- * @param {string} [config.containerId='call-list-container'] - コール一覧を挿入する要素ID
- * @param {string} [config.playerId='player'] - YouTubeプレイヤーの要素ID
- */
 function initCallGuide(config) {
   if (!config) return;
   var videoId = config.videoId;
@@ -76,7 +51,6 @@ function initCallGuide(config) {
   var containerId = config.containerId || 'call-list-container';
   var playerId = config.playerId || 'player';
 
-  // 1. コールブロックの動的生成
   function renderBlocks() {
     var container = document.getElementById(containerId);
     if (!container) return;
@@ -102,7 +76,6 @@ function initCallGuide(config) {
       }
       block.innerHTML = html;
 
-      // クリック時に動画をその時間へシーク
       block.addEventListener('click', function() {
         if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
           ytPlayer.seekTo(startSec, true);
@@ -122,7 +95,6 @@ function initCallGuide(config) {
     renderBlocks();
   }
 
-  // 2. YouTube IFrame Player API のセットアップ
   if (videoId) {
     function createPlayer() {
       if (window.YT && window.YT.Player) {
@@ -133,7 +105,7 @@ function initCallGuide(config) {
           playerVars: {
             'playsinline': 1,
             'rel': 0,
-            'controls': 0 // 標準コントロールを非表示にする場合
+            'controls': 0
           },
           events: {
             'onStateChange': onPlayerStateChange
@@ -162,9 +134,6 @@ function initCallGuide(config) {
   }
 }
 
-/**
- * プレイヤーの状態変化イベントハンドラ
- */
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     if (!checkTimer) {
@@ -179,7 +148,7 @@ function onPlayerStateChange(event) {
 }
 
 /**
- * 現在の再生時間に合わせてコールブロックをハイライト ＆ カスタムプレイヤーの表示を更新
+ * コールハイライト・現在時間表示・シークバーの更新
  */
 function updateHighlight() {
   if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
@@ -187,7 +156,7 @@ function updateHighlight() {
   var duration = ytPlayer.getDuration();
   var blocks = document.querySelectorAll('.call-block');
 
-  // --- 1. コールブロックのハイライト処理 ---
+  // 1. コールブロックのハイライト
   blocks.forEach(function(block) {
     var start = parseFloat(block.getAttribute('data-start'));
     var end = parseFloat(block.getAttribute('data-end'));
@@ -199,24 +168,21 @@ function updateHighlight() {
     }
   });
 
-  // --- 2. カスタムプレイヤー（タイルUI）の表示更新処理 ---
+  // 2. 現在時間テキストの更新
   var currentTimeEl = document.getElementById('current-time');
-  var durationEl = document.getElementById('duration');
-  var seekBar = document.getElementById('seek-bar');
-
   if (currentTimeEl) {
     currentTimeEl.textContent = formatSecondsToDisplay(currentTime).replace('~', '');
   }
-  if (durationEl && duration > 0) {
-    durationEl.textContent = formatSecondsToDisplay(duration).replace('~', '');
-  }
+
+  // 3. シークバーの更新
+  var seekBar = document.getElementById('seek-bar');
   if (seekBar && duration > 0) {
     seekBar.value = (currentTime / duration) * 100;
   }
 }
 
 /**
- * DOM読み込み完了時にカスタムプレイヤーの操作イベントを登録
+ * カスタムプレイヤー操作イベント
  */
 document.addEventListener('DOMContentLoaded', function() {
   var playPauseBtn = document.getElementById('play-pause-btn');
@@ -255,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // 音量変更
+  // 音量操作
   if (volumeBar) {
     volumeBar.addEventListener('input', function(e) {
       if (ytPlayer && typeof ytPlayer.setVolume === 'function') {
