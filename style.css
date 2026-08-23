@@ -395,23 +395,30 @@ header a {
   font-variant-numeric: tabular-nums; /* 数字の横幅を固定 */
 }
 
-/* シークバーエリア（マーカー配置のために relative を付与） */
+/* シークバーエリア */
 .tile-seek {
   flex-grow: 1;
   display: flex;
   align-items: center;
-  position: relative; /* JSで生成されるマーカーの位置基準 */
+  position: relative;
+  /* 親要素（.tile-seek）に高さを持たせることで、
+     マーカーがシークバーの真ん中に来るようにする */
+  height: 100%; 
 }
 
-/* コール挿入位置を示すピンマーカー */
+/* コール挿入位置を示す丸いドットマーカー */
 .call-marker {
   position: absolute;
   top: 50%;
+  /* 左上ではなく、中心を基準に位置合わせをする */
   transform: translate(-50%, -50%);
-  width: 3px;             /* マーカーの横幅 */
-  height: 12px;           /* マーカーの高さ */
+  
+  /* 丸い点にするための設定 */
+  width: 8px;            /* ドットの直径 */
+  height: 8px;           
   background-color: #ff2d55; /* 強調カラー（ピンク/赤系） */
-  border-radius: 2px;
+  border-radius: 50%;     /* 正円にする */
+  
   pointer-events: none;  /* シークバーのドラッグやクリック操作を阻害しない */
   z-index: 2;            /* シークバーより手前に表示 */
 }
