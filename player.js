@@ -197,6 +197,29 @@ function updateHighlight() {
     } else {
       block.classList.remove('active');
     }
+
+    // 既存の再生位置監視ルーチンの中で一緒にUIを更新する
+function updateCustomPlayerUI() {
+  if (player && player.getCurrentTime) {
+    const current = player.getCurrentTime();
+    const duration = player.getDuration();
+    
+    // 時間表示の更新
+    document.getElementById('current-time').textContent = formatTime(current);
+    document.getElementById('duration').textContent = formatTime(duration);
+    
+    // シークバーの更新
+    if (duration > 0) {
+      document.getElementById('seek-bar').value = (current / duration) * 100;
+    }
+  }
+}
   });
+
+
+
+
+
+  
 }
 
