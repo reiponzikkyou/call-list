@@ -331,3 +331,117 @@ header a {
 .topic-link:hover {
   text-decoration: underline;
 }
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* 画面下部固定のカスタムプレイヤー */
+.video-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+/* 画面下部固定の本体 */
+.tile-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+/* タイル共通スタイル（フラット・角丸） */
+.tile-item {
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: none;
+}
+
+/* 再生ボタンタイル */
+.tile-btn {
+  width: 48px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tile-btn:hover {
+  background-color: #e4e6eb;
+}
+
+.tile-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: #333333;
+}
+
+/* 時間表示タイル */
+.tile-time {
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555555;
+  gap: 4px;
+}
+
+.time-divider {
+  color: #aaa;
+}
+
+/* シークバータイル（幅いっぱいに広げる） */
+.tile-seek {
+  flex-grow: 1;
+  padding: 0 16px;
+}
+
+/* 音量タイル */
+.tile-volume {
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.tile-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tile-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #555555;
+}
+
+/* レンジスライダーのシンプル化 */
+input[type="range"] {
+  width: 100%;
+  accent-color: #333333; /* スライダーのつまみの色 */
+  cursor: pointer;
+}
+
+#volume-bar {
+  width: 70px;
+}
+
+/* 非表示制御用クラス */
+.hidden {
+  display: none !important;
+}
