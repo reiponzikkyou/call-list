@@ -338,118 +338,105 @@ header a {
   margin-top: 40px;
 }
 
-/* 画面下部固定のカスタムプレイヤー */
-.video-container {
-  display: flex;
-  justify-content: center;
-  padding: 40px 0;
-}
-
-/* 画面下部固定の本体 */
+/* 画面下部固定バー本体 */
 .tile-player {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 12px 16px;
+  height: 60px;
+  padding: 0 20px;
   background-color: #ffffff;
   border-top: 1px solid #e0e0e0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   box-sizing: border-box;
   z-index: 9999;
 }
 
-/* タイル共通スタイル（フラット・角丸） */
+/* 座布団（背景枠）を全要素から除去 */
 .tile-item {
-  background-color: #f0f2f5;
-  border-radius: 8px;
-  height: 48px;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* 再生/停止アイコンボタン */
+.tile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  border: none;
-  /* 時間表示タイルの幅を固定してガタつきを防止 */
-.tile-time {
-  width: 60px; /* 秒数が変わっても幅を固定（必要に応じて50px〜65px程度で調整） */
-  flex-shrink: 0; /* 幅が潰れないように固定 */
-  text-align: center; /* 数字を中央寄せ */
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; /* 等幅フォントで数字の幅を統一 */
-  font-variant-numeric: tabular-nums; /* 数字の横幅を等幅にするプロパティ */
-}
-}
-
-/* 再生ボタンタイル */
-.tile-btn {
-  width: 48px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.tile-btn:hover {
-  background-color: #e4e6eb;
 }
 
 .tile-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   fill: #333333;
 }
 
-/* 時間表示タイル */
+/* 時間表示（座布団なし・幅完全固定・右詰めでシークバーへ干渉させない） */
 .tile-time {
-  padding: 0 16px;
+  width: 48px !important; /* 幅を固定 */
+  min-width: 48px !important;
+  max-width: 48px !important;
+  flex-shrink: 0 !important; /* 絶対に伸縮させない */
+  text-align: right; /* 右詰めにすることでシークバー側の余白を常に一定にする */
   font-size: 13px;
   font-weight: 600;
-  color: #555555;
-  gap: 4px;
+  color: #666666;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums; /* 数字の横幅を固定 */
 }
 
-.time-divider {
-  color: #aaa;
-}
-
-/* シークバータイル（幅いっぱいに広げる） */
+/* シークバー（幅一杯に拡張） */
 .tile-seek {
   flex-grow: 1;
-  padding: 0 16px;
+  display: flex;
+  align-items: center;
 }
 
-/* 音量タイル */
+/* 音量エリア */
 .tile-volume {
-  padding: 0 12px;
+  display: flex;
+  align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .tile-icon-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 4px;
   display: flex;
   align-items: center;
 }
 
 .tile-icon-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: #555555;
 }
 
-/* レンジスライダーのシンプル化 */
+/* スライダーの見た目調整 */
 input[type="range"] {
   width: 100%;
-  accent-color: #333333; /* スライダーのつまみの色 */
+  accent-color: #333333;
   cursor: pointer;
 }
 
 #volume-bar {
-  width: 70px;
+  width: 80px;
 }
 
-/* 非表示制御用クラス */
+/* 非表示切り替え用 */
 .hidden {
   display: none !important;
 }
