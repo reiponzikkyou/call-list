@@ -5,44 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chu♡Key×Chu♡Key - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
-    .media-container {
-      width: 100%;
-      max-width: 560px;
-      margin: 0 auto 20px auto;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .media-container iframe {
-      width: 100% !important;
-      aspect-ratio: 16 / 9;
-      height: auto !important;
-      display: block;
-      border: none;
-    }
-
-    /* ハイライト用のスタイル */
-    .call-block {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      transition: background-color 0.3s, border-left 0.3s;
-      border-left: 4px solid transparent;
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-    .call-block.active {
-      background-color: #ffe6ed; /* ハイライト背景色 */
-      border-left: 4px solid var(--primary-color, #ff4785);
-    }
-    .time-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #888;
-      margin-right: 8px;
-    }
-  </style>
 </head>
 <body>
 
@@ -56,275 +18,83 @@
     <div class="card">
       <h1 class="song-title">Chu♡Key×Chu♡Key</h1>
 
-      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
       <div class="media-container">
         <div id="player"></div>
       </div>
 
-      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+      <div class="notice">
         ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
       </div>
 
-      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
-      <div class="lyrics">
-
-        <!-- イントロ1 -->
-        <div class="call-block" data-start="0" data-end="0">
-          <span class="time-label">0:00~</span>
-          <span class="call">
-
-            <br>私さえ知らない私のこと
-
-            <br>「冒険しましょ？」
-            <br>(トーマスゴードンヘンリーパーシードビーエドワードぽっぽー)
-            <br>Chu♡Key Choose♡Key
-
-            <br>Chu♡Me Choose♡Me
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>My♡Darling
-
-            <br>はぁ今日もかわいいに大忙し
-
-            <br>SNSはキラッ
-
-            <br>鍵垢稼働もMax 
-            <br>(Max！)
-
-            <br>あなたがいるせい？
-
-            <br>いやいなくたって一緒
-
-            <br>だって女の子だもん
-
-            <br>ある日はビジュ最強くかも 
-
-            <br>ある日はマジ鬱グラグラ 
-
-            <br>嘘じゃなくて矛盾しちゃうって
-
-            <br>かわいい
-
-            <br>女の子は複雑なの
-
-            <br>ウラウラのウラオモテ
-
-            <br>かわいくありたい。
-
-            <br>でもかわいくないのもかわいかった
-
-            <br>でもかわいくないのもかわいかったり？
-
-            <br>もはやこりゃミステリ～
-
-            <br>「一緒に解き明かして？」
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>開けてよDarling♡
-            <br>(おーふっふー↓)
-            <br>ダイヤルは？ってそういうとこ 
-            <br>(👏👏フワフワ)
-            <br>Chu♡Key Chu♡Key
-            <br>(はいせーのはいせーの)
-            <br>かわいいもそうじゃないとこも 
-            <br>(おーいおいおいおいおい)
-            <br>私なの
-
-            <br>扉の向こうにはね
-
-            <br>きっとキケンなワンダーランド
-
-            <br>私さえ知らない私のこと「せーの、冒険しましょ？」
-
-            <br>鍵をかけたらもう戻れないかも
-
-            <br>私とChu♡Key♡Chu
-
-            <br>昔のえらい人
-
-            <br>こんな感じのこと言ってた
-
-            <br>「人間は生まれた時からピュアカワイイ｣
-            <br>（ピュアカワイイ！）
-
-            <br>そう！あなたもキミも
-
-            <br>その隣、あのおじさんも！？
-
-            <br>もしかしてプリンセス！？
-
-            <br>「流石にか...？」
-
-            <br>はじめはみんな真っ白なら
-
-            <br>おしゃれし甲斐があるもんね 
-
-            <br>神様って案外女の子だったり？
-
-            <br>女の子は単純なの
-
-            <br>その言葉が欲しいだけ
-
-            <br>なーんでこんな簡単な事がわかんないかな〜
-
-            <br>待ちきれないんだけど？
-
-            <br>「答えは教えなーいけど」
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>開けてよDarling 
-            <br>(おーふっふー↓)
-            <br>不器用でも頑張るってCute 
-            <br>(👏👏フワフワ)
-            <br>Chu♡Key Chu♡Key
-            <br>(はいせーのはいせーの)
-            <br>かわいいもそうじゃないとこも 
-            <br>(おーいおいおいおいおい)
-            <br>あなたなの 
-
-            <br>白があって黒がある
-
-            <br>光あって闇になる
-
-            <br>あなたさえ知らないあなたのこと
-
-            <br>「せーの、一緒に探そ？」
-
-            <br>なんとなく近づいて来たでしょ？
-
-            <br>あなたと Chu♡Key♡Chu
-            <br>(人造ファイヤファイボワイパータイガータイガータタタタタイガーチャペアペカラキナチャペアペカラキナミョーホントゥスケ👏ワイパーファイヤーファイヤー虎虎カラキナチャペアペファーマー海女海女ジャスパー虎タイガー虎タイガー人造繊維イェッタイガー(倍速))
-            <br>(Chu♡Key♡Chu!)
-
-            <br>かわいいなって
-
-            <br>愛おしいなって
-
-            <br>心病める時も心健やかなる時も
-
-            <br>私・あなたってちょーかわいい！
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>見つけた？Darling
-            <br>(タイガーファイバーサイバーファイバーダイバーバイバージャージャー(倍速))
-            <br>「心の準備は、できてる」
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>開けてよDarling
-            <br>(虎火人造繊維(倍速))
-            <br>「私のこと Chu♡Key？」
-            <br>(Chu♡Key!)
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>開けてよDarling 《Chu！》
-            <br>(おーふっふー↓)
-            <br>ダイヤルは？ってそういうとこ （はあ）
-            <br>(👏👏フワフワ)
-            <br>Chu♡Key Chu♡Key
-            <br>(はいせーのはいせーの)
-            <br>かわいいもそうじゃないとこも 《It's me!》
-            <br>(おーいおいおいおいおい)
-            <br>私なの（Yes！）
-
-            <br>扉の向こうにはね
-
-            <br>きっとキケンなワンダーランド
-
-            <br>私さえ知らない私のこと
-
-            <br>「せーの、冒険しましょ？」
-
-            <br>鍵をかけたらもう戻れないかも
-
-            <br>私とChu♡Key♡Chu(Chu♡Key!)
-
-            <br>Chu♡Key♡Chu (Chu♡Key!)
-
-            <br>もっと好きになる
-
-            <br>私とChu♡Key♡Chu
-
-            <br>Chu♡Key Choose♡Key
-
-            <br>Chu♡Me Choose♡Me
-
-            <br>Chu♡Key Chu♡Key
-
-            <br>My♡Darling
-
-            <br>Chu♡
-
-
-
-            <br>入ってるコール(上から順)
-            <br>・トーマスMIX
-            <br>・可変3連
-            <br>・スタンダードMIX(倍速)
-            <br>・日本語MIX(倍速)
-          </span>
-        </div>
-
-      </div>
+      <div class="lyrics" id="call-list-container"></div>
     </div>
   </div>
 
-  <!-- YouTube IFrame Player API スクリプト -->
+  <script src="../player.js"></script>
   <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: 'Kuht1mw5ni4', // ★対象の11桁の動画ID
-        playerVars: { 
-          'playsinline': 1,
-          'rel': 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    var checkTimer = null;
-
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        checkTimer = setInterval(updateHighlight, 300);
-      } else {
-        clearInterval(checkTimer);
-      }
-    }
-
-    function updateHighlight() {
-      if (!player || !player.getCurrentTime) return;
-      var currentTime = player.getCurrentTime();
-      var blocks = document.querySelectorAll('.call-block');
-
-      blocks.forEach(function(block) {
-        var start = parseFloat(block.getAttribute('data-start'));
-        var end = parseFloat(block.getAttribute('data-end'));
-
-        if (currentTime >= start && currentTime < end) {
-          block.classList.add('active');
-        } else {
-          block.classList.remove('active');
-        }
-      });
-    }
+    initCallGuide({
+      videoId: "Kuht1mw5ni4",
+      calls: [
+        { start: "0:05", end: "0:17", call: "出発進行！\nトーマスゴードンヘンリーパーシードビーエドワードぽっぽー" },
+        { start: "0:21", end: "0:22", lyrics: "鍵垢稼働もMax", call: "Max！" },
+        { start: "0:40", end: "0:46", call: "👏ぱーん 👏👏ぱぱん はい！×4" },
+        { start: "0:55", end: "0:57", lyrics: "開けてよDarling♡", call: "おーふっふー↓" },
+        { start: "0:57", end: "1:00", lyrics: "ダイヤルは？ってそういうとこ", call: "👏👏フワフワ" },
+        { start: "0:59", end: "1:02", lyrics: "Chu♡Key Chu♡Key", call: "はいはいせーの！ はいせーの！" },
+        { start: "1:02", end: "1:05", lyrics: "かわいいもそうじゃないとこも", call: "おーいおいおいおいおい" },
+        { start: "1:26", end: "1:27", lyrics: "「人間は生まれた時からピュアカワイイ｣", call: "ピュアカワイイ！" },
+        { start: "1:37", end: "1:38", call: "うんうん" },
+        { start: "1:45", end: "1:50", call: "👏ぱーん 👏👏ぱぱん はい！×4" },
+        { start: "1:59", end: "2:01", lyrics: "開けてよDarling", call: "おーふっふー↓" },
+        { start: "2:01", end: "2:04", lyrics: "不器用でも頑張るってCute", call: "👏👏フワフワ" },
+        { start: "2:04", end: "2:07", lyrics: "Chu♡Key Chu♡Key", call: "はいはいせーの！ はいせーの！" },
+        { start: "2:07", end: "2:09", lyrics: "かわいいもそうじゃないとこも", call: "おーいおいおいおいおい" },
+        { start: "2:26", end: "2:37", call: "人造ファイヤファイボワイパー\nタイガータイガータタタタタイガー\nチャペアペカラキナチャペアペカラキナミョーホントゥスケ👏ワイパー\nファイヤーファイヤー虎虎カラキナチャペアペファーマー海女海女ジャスパー虎タイガー虎タイガー人造繊維イェッタイガー" },
+        { start: "2:37", end: "2:39", call: "私(あなた)って、ちょーかわいい！" },
+        { start: "2:42", end: "2:45", call: "👏👏タイガーファイバーサイバーファイバーダイバーバイバージャージャー" },
+        { start: "2:47", end: "2:49", call: "👏👏虎火人造繊維" },
+        { start: "2:49", end: "2:50", lyrics: "私のこと Chu♡Key？", call: "ちゅき！" },
+        { start: "2:51", end: "2:53", lyrics: "開けてよDarling", call: "おーふっふー↓" },
+        { start: "2:53", end: "2:56", lyrics: "ダイヤルは？ってそういうとこ", call: "👏👏フワフワ" },
+        { start: "2:56", end: "2:59", lyrics: "Chu♡Key Chu♡Key", call: "はいはいせーの！ はいせーの！" },
+        { start: "2:59", end: "3:02", lyrics: "かわいいもそうじゃないとこも", call: "おーいおいおいおいおい" },
+        { start: "3:10", end: "3:13", lyrics: "「せーの、冒険しましょ？」", call: "冒険しましょ！" },
+        { start: "3:17", end: "3:19", call: "Chu♡Key×2" }
+      ]
+    });
   </script>
+  <br>
+<br>
+<br>
 
+<!-- タイル型カスタムプレイヤー -->
+<div class="tile-player">
+  
+  <!-- 再生/停止 -->
+  <button id="play-pause-btn" class="tile-item tile-btn" aria-label="再生/一時停止">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" class="hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <!-- 現在時間表示 -->
+  <div class="tile-item tile-time">
+    <span id="current-time">0:00</span>
+  </div>
+
+  <!-- シークバー（横いっぱいに広がる） -->
+  <div class="tile-item tile-seek">
+    <input type="range" id="seek-bar" value="0" min="0" max="100" step="0.1">
+  </div>
+
+  <!-- 音量 -->
+  <div class="tile-item tile-volume">
+    <button id="mute-btn" class="tile-icon-btn" aria-label="ミュート切替">
+      <svg id="icon-volume" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <svg id="icon-muted" viewBox="0 0 24 24" class="hidden"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    </button>
+    <input type="range" id="volume-bar" value="100" min="0" max="100">
+  </div>
 </body>
 </html>
