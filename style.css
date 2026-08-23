@@ -371,6 +371,14 @@ header a {
   justify-content: center;
   box-sizing: border-box;
   border: none;
+  /* 時間表示タイルの幅を固定してガタつきを防止 */
+.tile-time {
+  width: 60px; /* 秒数が変わっても幅を固定（必要に応じて50px〜65px程度で調整） */
+  flex-shrink: 0; /* 幅が潰れないように固定 */
+  text-align: center; /* 数字を中央寄せ */
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; /* 等幅フォントで数字の幅を統一 */
+  font-variant-numeric: tabular-nums; /* 数字の横幅を等幅にするプロパティ */
+}
 }
 
 /* 再生ボタンタイル */
