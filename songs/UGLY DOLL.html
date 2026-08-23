@@ -5,44 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UGLY DOLL - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
-    .media-container {
-      width: 100%;
-      max-width: 560px;
-      margin: 0 auto 20px auto;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .media-container iframe {
-      width: 100% !important;
-      aspect-ratio: 16 / 9;
-      height: auto !important;
-      display: block;
-      border: none;
-    }
-
-    /* ハイライト用のスタイル */
-    .call-block {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      transition: background-color 0.3s, border-left 0.3s;
-      border-left: 4px solid transparent;
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-    .call-block.active {
-      background-color: #ffe6ed; /* ハイライト背景色 */
-      border-left: 4px solid var(--primary-color, #ff4785);
-    }
-    .time-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #888;
-      margin-right: 8px;
-    }
-  </style>
 </head>
 <body>
 
@@ -56,120 +18,64 @@
     <div class="card">
       <h1 class="song-title">UGLY DOLL</h1>
 
-      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
       <div class="media-container">
         <div id="player"></div>
       </div>
 
-      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+      <div class="notice">
         ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
       </div>
 
-      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
-      <div class="lyrics">
-
-        <!-- イントロ1 -->
-        <div class="call-block" data-start="0" data-end="0">
-          <span class="time-label">0:00~</span>
-          <span class="call">
-            <br>メンバーのクラップ煽り→全力クラップ
-
-            <br>うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞタイガーファイヤーサイバーファイバーダイバーバイバージャージャー)
-
-            <br>でもいっそそれで死ねたらいいなぁ
-
-            <br>(イェッタイガーからのイェッタイガーからイェッタイガーからのイェッタイガー)
-
-            <br>悲しい人形 UGLY DOLL
-
-            <br>(うっおいうっおいうっおいうっおい👏 👏👏 👏 👏しゃーいくぞ 虎 火 人造 繊維 海女 振動 化繊)
-
-            <br>泣いてる人形 UGLY DOLL
-
-            <br>アッチェレorホグワーツmix
-            <br>(農場 舞 海鵜 跳 除去飛化繊振動海女繊維人造火 ！虎 ！火 ！虎 ！火 ！虎虎虎虎 虎火人造海女振動 ！海女振海女震海女振動！ 海女繊維海女繊維人造火 ！虎火人造繊維 👏海女！振動！化繊！飛！除去！跳！海鵜！舞！農場！)
-
-            <br>(マルフォイ　マルフォイ　マルフォイ　マルフォイ
-            <br>あ～👏グリフィンドール
-            <br>アクシオ　レダクト　ルーモス
-            <br>ウィンガーディア厶レヴィオーサー
-            <br>貴方のはレヴィオサー
-            <br>エクスペクトパトローナム
-            <br>トムリドル　トムリドル
-            <br>ヴォルデモートって知ってる？)
-
-            <br>悲しい人形UGLY DOLL
-            <br>(若気のイタリア
-            <br>ミランばかりのアンディアモ
-            <br>ティグレ　フォーコ　レプリカンテ
-            <br>フィーブラ　バロンバーロ　ウィブラメント
-            <br>テクノボラーレ　アストラっツィオーネ)
-
-
-            <br>入ってるコール(上から順)
-            <br>・スタンダードMIX
-            <br>・日本語MIX
-            <br>・アッチェレ
-            <br>・ホグワーツMIX
-            <br>・若気のイタリア→スペイン語MIX
-          </span>
-        </div>
-
-      </div>
+      <div class="lyrics" id="call-list-container"></div>
     </div>
   </div>
 
-  <!-- YouTube IFrame Player API スクリプト -->
+  <script src="../player.js"></script>
   <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: '3j_vZjyRUHE', // ★対象の11桁の動画ID
-        playerVars: { 
-          'playsinline': 1,
-          'rel': 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    var checkTimer = null;
-
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        checkTimer = setInterval(updateHighlight, 300);
-      } else {
-        clearInterval(checkTimer);
-      }
-    }
-
-    function updateHighlight() {
-      if (!player || !player.getCurrentTime) return;
-      var currentTime = player.getCurrentTime();
-      var blocks = document.querySelectorAll('.call-block');
-
-      blocks.forEach(function(block) {
-        var start = parseFloat(block.getAttribute('data-start'));
-        var end = parseFloat(block.getAttribute('data-end'));
-
-        if (currentTime >= start && currentTime < end) {
-          block.classList.add('active');
-        } else {
-          block.classList.remove('active');
-        }
-      });
-    }
+    initCallGuide({
+      videoId: "3j_vZjyRUHE",
+      calls: [
+        { start: "0:07", end: "0:10", call: "クラップ👏" },
+        { start: "0:14", end: "0:27", call: "うっおいうっおいうっおいうっおい\n👏 👏👏 👏 👏しゃーいくぞ\nタイガーファイヤーサイバーファイバーダイバーバイバージャージャー" },
+        { start: "0:40", end: "0:46", call: "イェッタイガーからのイェッタイガーからイェッタイガーからのイェッタイガー" },
+        { start: "1:26", end: "1:39", call: "うっおいうっおいうっおいうっおい\n👏 👏👏 👏 👏しゃーいくぞ \n虎 火 人造 繊維 海女 振動 化繊" },
+        { start: "2:22", end: "2:47", call: "アッチェレorホグワーツmix\n[アッチェレ]\n農場 舞 海鵜 跳 除去飛化繊振動海女繊維人造火 ！虎 ！火 ！虎 ！火 ！虎虎虎虎 虎火人造海女振動 ！海女振海女震海女振動！ 海女繊維海女繊維人造火 ！虎火人造繊維 👏海女！振動！化繊！飛！除去！跳！海鵜！舞！農場！\n\n[ホグワーツmix]\nマルフォイ　マルフォイ　マルフォイ　マルフォイ\nあ～👏グリフィンドール\nアクシオ　レダクト　ルーモス\nウィンガーディア厶レヴィオーサー\n貴方のはレヴィオサー\nエクスペクトパトローナム\nトムリドル　トムリドル\nヴォルデモートって知ってる？" },
+        { start: "3:18", end: "3:32", call: "若気のイタリア\nミランばかりのアンディアモ\nティグレ　フォーコ　レプリカンテ\nフィーブラ　バロンバーロ　ウィブラメント\nテクノボラーレ　アストラっツィオーネ" }
+      ]
+    });
   </script>
+  <br>
+<br>
+<br>
 
+<!-- タイル型カスタムプレイヤー -->
+<div class="tile-player">
+  
+  <!-- 再生/停止 -->
+  <button id="play-pause-btn" class="tile-item tile-btn" aria-label="再生/一時停止">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" class="hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <!-- 現在時間表示 -->
+  <div class="tile-item tile-time">
+    <span id="current-time">0:00</span>
+  </div>
+
+  <!-- シークバー（横いっぱいに広がる） -->
+  <div class="tile-item tile-seek">
+    <input type="range" id="seek-bar" value="0" min="0" max="100" step="0.1">
+  </div>
+
+  <!-- 音量 -->
+  <div class="tile-item tile-volume">
+    <button id="mute-btn" class="tile-icon-btn" aria-label="ミュート切替">
+      <svg id="icon-volume" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <svg id="icon-muted" viewBox="0 0 24 24" class="hidden"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    </button>
+    <input type="range" id="volume-bar" value="100" min="0" max="100">
+  </div>
 </body>
 </html>

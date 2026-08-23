@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>愛してエイエンげーじっ♡ - コールガイド</title>
+  <title>愛してアイエンげーじっ♡ - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -16,9 +16,8 @@
     <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
 
     <div class="card">
-      <h1 class="song-title">愛してエイエンげーじっ♡</h1>
+      <h1 class="song-title">愛してアイエンげーじっ♡</h1>
 
-      <!-- YouTube API プレーヤー表示エリア -->
       <div class="media-container">
         <div id="player"></div>
       </div>
@@ -29,190 +28,76 @@
         ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
       </div>
 
-      <!-- コール表表示エリア（player.jsで自動生成） -->
       <div class="lyrics" id="call-list-container"></div>
     </div>
   </div>
 
-  <!-- 共通スクリプトの読み込み -->
   <script src="../player.js"></script>
-
-  <!-- 楽曲コールデータ（辞書形式で簡単管理） -->
   <script>
     initCallGuide({
-      videoId: 'L-VMYQ1v-vM', // YouTube動画ID
+      videoId: "L-VMYQ1v-vM",
       calls: [
-        {
-          start: "0:07",
-          end: "0:13",
-          lyrics: "恋した君の愛は全部私に委ねて？",
-          call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅんしゃー行かない❌萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん"
-        },
-        {
-          start: "0:14",
-          end: "0:17",
-          lyrics: "知りたい何でだろう？",
-          call: "あーモカちゃん"
-        },
-        {
-          start: "0:18",
-          end: "0:21",
-          lyrics: "会えない恋だから？",
-          call: "あーひまり"
-        },
-        {
-          start: "0:22",
-          end: "0:25",
-          lyrics: "優柔不断でも",
-          call: "あーゆらちゃん"
-        },
-        {
-          start: "0:26",
-          end: "0:30",
-          lyrics: "うざったいほど好きになる！",
-          call: "おーれーのりりな"
-        },
-        {
-          start: "0:31",
-          end: "0:34",
-          lyrics: "大きい愛なのに",
-          call: "あーつくし"
-        },
-        {
-          start: "0:35",
-          end: "0:38",
-          lyrics: "全然損しちゃう",
-          call: "あーモカちゃん"
-        },
-        {
-          start: "0:39",
-          end: "0:42",
-          lyrics: "不甲斐ない恋だから",
-          call: "あーひまり"
-        },
-        {
-          start: "0:43",
-          end: "0:47",
-          lyrics: "じれったいまま変われない！",
-          call: "おーれーのまりあ"
-        },
-        {
-          start: "0:48",
-          end: "0:55",
-          lyrics: "いつまでこのままでいいの？",
-          call: "りりな×6"
-        },
-        {
-          start: "0:56",
-          end: "1:00",
-          lyrics: "指輪渡すからこの指にはめてみて？",
-          call: "イェッイェッイェッタイガー"
-        },
-        {
-          start: "1:01",
-          end: "1:06",
-          lyrics: "もう本気の恋にして！愛して！",
-          call: "あ！　あ！　愛してる！"
-        },
-        {
-          start: "1:07",
-          end: "1:11",
-          lyrics: "ポイした恋の分も",
-          call: "あいあいあいあい愛してる"
-        },
-        {
-          start: "1:12",
-          end: "1:16",
-          lyrics: "君が私を愛して！",
-          call: "あいあいあいあい愛してる"
-        },
-        {
-          start: "1:17",
-          end: "1:26",
-          lyrics: "なんてもう知らない許せない！！",
-          call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅんしゃー行かない❌萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん"
-        },
-        {
-          start: "1:27",
-          end: "1:30",
-          lyrics: "きゅんってする何でだろう？",
-          call: "あーまりあ"
-        },
-        {
-          start: "1:31",
-          end: "1:34",
-          lyrics: "損しちゃう恋なのに",
-          call: "あーゆらちゃん"
-        },
-        {
-          start: "1:35",
-          end: "1:38",
-          lyrics: "相当愛してる",
-          call: "あーひまり"
-        },
-        {
-          start: "1:39",
-          end: "1:43",
-          lyrics: "じれったいのがクセになる！",
-          call: "おーれーのモカちゃん"
-        },
-        {
-          start: "1:44",
-          end: "1:47",
-          lyrics: "全然会えなくて",
-          call: "あーりりな"
-        },
-        {
-          start: "1:48",
-          end: "1:51",
-          lyrics: "他の人見てるかも？",
-          call: "あーつくし"
-        },
-        {
-          start: "1:52",
-          end: "1:55",
-          lyrics: "2番目の恋なんて",
-          call: "あーゆらちゃん"
-        },
-        {
-          start: "1:56",
-          end: "2:00",
-          lyrics: "狂っちゃうだけど変われない",
-          call: "おーれーのりりな"
-        },
-        {
-          start: "2:01",
-          end: "2:08",
-          lyrics: "このまま夢になる前に涙流すから",
-          call: "ひまり×6"
-        },
-        {
-          start: "2:09",
-          end: "2:13",
-          lyrics: "この指輪はめてみて？",
-          call: "イェッイェッイェッタイガー"
-        },
-        {
-          start: "2:14",
-          end: "2:18",
-          lyrics: "もう本気の恋にして！愛して！",
-          call: "あ！　あ！　愛してる！"
-        },
-        {
-          start: "2:19",
-          end: "2:23",
-          lyrics: "君が私を愛して！",
-          call: "あいあいあいあい愛してる"
-        },
-        {
-          start: "2:24",
-          end: "2:35",
-          lyrics: "なんてもう知らない許せない！！",
-          call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅんしゃー行かない❌萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん"
-        }
+        { start: "0:06", end: "0:16", lyrics: "恋した君の愛は全部私に委ねて？", call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん\nしゃー行かない❌\n萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん" },
+        { start: "0:16", end: "0:20", lyrics: "知りたい何でだろう？", call: "あー！(名前)！" },
+        { start: "0:20", end: "0:21", lyrics: "会えない恋だから？", call: "あー！(名前)！" },
+        { start: "0:21", end: "0:24", lyrics: "優柔不断でも", call: "あー！(名前)！" },
+        { start: "0:24", end: "0:27", lyrics: "うざったいほど好きになる！", call: "おーれーのー！(名前)！" },
+        { start: "0:27", end: "0:29", lyrics: "大きい愛なのに", call: "あー！(名前)！" },
+        { start: "0:29", end: "0:32", lyrics: "全然損しちゃう", call: "あー！(名前)！" },
+        { start: "0:32", end: "0:35", lyrics: "不甲斐ない恋だから", call: "あー！(名前)！" },
+        { start: "0:35", end: "0:37", lyrics: "じれったいまま変われない！", call: "おーれーのー！(名前)！" },
+        { start: "0:37", end: "0:46", lyrics: "いつまでこのままでいいの？", call: "(名前)！×6" },
+        { start: "0:45", end: "0:48", lyrics: "指輪渡すからこの指にはめてみて？", call: "イェッイェッイェッタイガー" },
+        { start: "0:51", end: "0:53", lyrics: "もう本気の恋にして！愛して！", call: "あ！あ！愛してる！" },
+        { start: "0:53", end: "0:59", lyrics: "ポイした恋の分も", call: "あいあいあいあい愛してる！×2" },
+        { start: "1:10", end: "1:20", lyrics: "許せない！！", call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん\nしゃー行かない❌\n萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん" },
+        { start: "1:21", end: "1:23", lyrics: "きゅんってする何でだろう？", call: "あー！(名前)！" },
+        { start: "1:24", end: "1:26", lyrics: "損しちゃう恋なのに", call: "あー！(名前)！" },
+        { start: "1:27", end: "1:28", lyrics: "相当愛してる", call: "あー！(名前)！" },
+        { start: "1:28", end: "1:31", lyrics: "じれったいのがクセになる！", call: "おーれーのー！(名前)！" },
+        { start: "1:32", end: "1:34", lyrics: "全然会えなくて", call: "あー！(名前)！" },
+        { start: "1:35", end: "1:36", lyrics: "他の人見てるかも？", call: "あー！(名前)！" },
+        { start: "1:38", end: "1:39", lyrics: "2番目の恋なんて", call: "あー！(名前)！" },
+        { start: "1:39", end: "1:41", lyrics: "狂っちゃうだけど変われない", call: "おーれーのー！(名前)！" },
+        { start: "1:42", end: "1:49", lyrics: "このまま夢になる前に涙流すから", call: "(名前)！×6" },
+        { start: "1:49", end: "1:52", lyrics: "この指輪はめてみて？", call: "イェッイェッイェッタイガー" },
+        { start: "1:55", end: "1:57", lyrics: "もう本気の恋にして！愛して！", call: "あ！あ！愛してる！" },
+        { start: "1:57", end: "2:03", lyrics: "ギューした責任はね", call: "あいあいあいあい愛してる！×2" },
+        { start: "2:32", end: "2:37", lyrics: "ポイした恋の分も", call: "あいあいあいあい愛してる！×2" },
+        { start: "2:48", end: "2:59", call: "萌え萌えきゅん萌え萌えきゅん萌え萌えきゅんしゃー行かない❌萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん萌え萌えきゅん" }
       ]
     });
   </script>
+  <br>
+<br>
+<br>
 
+<!-- タイル型カスタムプレイヤー -->
+<div class="tile-player">
+  
+  <!-- 再生/停止 -->
+  <button id="play-pause-btn" class="tile-item tile-btn" aria-label="再生/一時停止">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" class="hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <!-- 現在時間表示 -->
+  <div class="tile-item tile-time">
+    <span id="current-time">0:00</span>
+  </div>
+
+  <!-- シークバー（横いっぱいに広がる） -->
+  <div class="tile-item tile-seek">
+    <input type="range" id="seek-bar" value="0" min="0" max="100" step="0.1">
+  </div>
+
+  <!-- 音量 -->
+  <div class="tile-item tile-volume">
+    <button id="mute-btn" class="tile-icon-btn" aria-label="ミュート切替">
+      <svg id="icon-volume" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <svg id="icon-muted" viewBox="0 0 24 24" class="hidden"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    </button>
+    <input type="range" id="volume-bar" value="100" min="0" max="100">
+  </div>
 </body>
 </html>
