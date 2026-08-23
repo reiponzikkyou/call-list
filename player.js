@@ -124,7 +124,6 @@ function initCallGuide(config) {
 
   // 2. YouTube IFrame Player API のセットアップ
   if (videoId) {
-    // APIがすでに読み込み済みの場合の初期化関数
     function createPlayer() {
       if (window.YT && window.YT.Player) {
         ytPlayer = new YT.Player(playerId, {
@@ -133,7 +132,8 @@ function initCallGuide(config) {
           videoId: videoId,
           playerVars: {
             'playsinline': 1,
-            'rel': 0
+            'rel': 0,
+            'controls': 0 // 標準コントロールを非表示にする場合
           },
           events: {
             'onStateChange': onPlayerStateChange
@@ -147,7 +147,6 @@ function initCallGuide(config) {
     } else {
       window.onYouTubeIframeAPIReady = createPlayer;
 
-      // scriptタグがまだ存在しない場合のみ追加
       var existingTag = document.querySelector('script[src*="youtube.com/iframe_api"]');
       if (!existingTag) {
         var tag = document.createElement('script');
@@ -180,46 +179,104 @@ function onPlayerStateChange(event) {
 }
 
 /**
- * 現在の再生時間に合わせてコールブロックをハイライト
+ * 現在の再生時間に合わせてコールブロックをハイライト ＆ カスタムプレイヤーの表示を更新
  */
 function updateHighlight() {
   if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
   var currentTime = ytPlayer.getCurrentTime();
+  var duration = ytPlayer.getDuration();
   var blocks = document.querySelectorAll('.call-block');
 
+  // --- 1. コールブロックのハイライト処理 ---
   blocks.forEach(function(block) {
     var start = parseFloat(block.getAttribute('data-start'));
     var end = parseFloat(block.getAttribute('data-end'));
 
-    // start <= currentTime < end のときにハイライト
     if (!isNaN(start) && !isNaN(end) && end > start && currentTime >= start && currentTime < end) {
       block.classList.add('active');
     } else {
       block.classList.remove('active');
     }
-
-    // 既存の再生位置監視ルーチンの中で一緒にUIを更新する
-function updateCustomPlayerUI() {
-  if (player && player.getCurrentTime) {
-    const current = player.getCurrentTime();
-    const duration = player.getDuration();
-    
-    // 時間表示の更新
-    document.getElementById('current-time').textContent = formatTime(current);
-    document.getElementById('duration').textContent = formatTime(duration);
-    
-    // シークバーの更新
-    if (duration > 0) {
-      document.getElementById('seek-bar').value = (current / duration) * 100;
-    }
-  }
-}
   });
 
+  // --- 2. カスタムプレイヤー（タイルUI）の表示更新処理 ---
+  var currentTimeEl = document.getElementById('current-time');
+  var durationEl = document.getElementById('duration');
+  var seekBar = document.getElementById('seek-bar');
 
-
-
-
-  
+  if (currentTimeEl) {
+    currentTimeEl.textContent = formatSecondsToDisplay(currentTime).replace('~', '');
+  }
+  if (durationEl && duration > 0) {
+    durationEl.textContent = formatSecondsToDisplay(duration).replace('~', '');
+  }
+  if (seekBar && duration > 0) {
+    seekBar.value = (currentTime / duration) * 100;
+  }
 }
 
+/**
+ * DOM読み込み完了時にカスタムプレイヤーの操作イベントを登録
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  var playPauseBtn = document.getElementById('play-pause-btn');
+  var iconPlay = document.getElementById('icon-play');
+  var iconPause = document.getElementById('icon-pause');
+  var seekBar = document.getElementById('seek-bar');
+  var volumeBar = document.getElementById('volume-bar');
+  var muteBtn = document.getElementById('mute-btn');
+  var iconVolume = document.getElementById('icon-volume');
+  var iconMuted = document.getElementById('icon-muted');
+
+  // 再生 / 一時停止
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', function() {
+      if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+      var state = ytPlayer.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        ytPlayer.pauseVideo();
+        if (iconPlay) iconPlay.classList.remove('hidden');
+        if (iconPause) iconPause.classList.add('hidden');
+      } else {
+        ytPlayer.playVideo();
+        if (iconPlay) iconPlay.classList.add('hidden');
+        if (iconPause) iconPause.classList.remove('hidden');
+      }
+    });
+  }
+
+  // シークバー操作
+  if (seekBar) {
+    seekBar.addEventListener('input', function() {
+      if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+      var duration = ytPlayer.getDuration();
+      var seekToTime = duration * (seekBar.value / 100);
+      ytPlayer.seekTo(seekToTime, true);
+    });
+  }
+
+  // 音量変更
+  if (volumeBar) {
+    volumeBar.addEventListener('input', function(e) {
+      if (ytPlayer && typeof ytPlayer.setVolume === 'function') {
+        ytPlayer.setVolume(e.target.value);
+      }
+    });
+  }
+
+  // ミュート切替
+  if (muteBtn) {
+    muteBtn.addEventListener('click', function() {
+      if (!ytPlayer || typeof ytPlayer.isMuted !== 'function') return;
+      if (ytPlayer.isMuted()) {
+        ytPlayer.unMute();
+        if (iconVolume) iconVolume.classList.remove('hidden');
+        if (iconMuted) iconMuted.classList.add('hidden');
+      } else {
+        ytPlayer.mute();
+        if (iconVolume) iconVolume.classList.add('hidden');
+        if (iconMuted) iconMuted.classList.remove('hidden');
+      }
+    });
+  }
+});
