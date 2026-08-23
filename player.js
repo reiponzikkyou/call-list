@@ -4,6 +4,7 @@
 
 var ytPlayer = null;
 var checkTimer = null;
+var markersRendered = false; // マーカー描画済みフラグ
 
 function parseTimeToSeconds(time) {
   if (typeof time === 'number') return time;
@@ -89,6 +90,44 @@ function initCallGuide(config) {
     });
   }
 
+  /**
+   * シークバー上にコールのマーカーを描画する
+   */
+  function renderSeekbarMarkers(duration) {
+    if (markersRendered || !duration || duration <= 0) return;
+    var seekBar = document.getElementById('seek-bar');
+    if (!seekBar) return;
+
+    var parent = seekBar.parentElement;
+    if (!parent) return;
+
+    // 親要素に relative を付与して位置基準にする
+    if (getComputedStyle(parent).position === 'static') {
+      parent.style.position = 'relative';
+    }
+
+    // 既存のマーカーがあれば除去
+    var oldMarkers = parent.querySelectorAll('.call-marker');
+    oldMarkers.forEach(function(m) { m.remove(); });
+
+    calls.forEach(function(item) {
+      var startSec = parseTimeToSeconds(item.start);
+      var percent = (startSec / duration) * 100;
+
+      if (percent >= 0 && percent <= 100) {
+        var marker = document.createElement('div');
+        marker.className = 'call-marker';
+        marker.style.left = percent + '%';
+        parent.appendChild(marker);
+      }
+    });
+
+    markersRendered = true;
+  }
+
+  // 外部からマーカーを描画できるように参照を保持
+  window.__renderSeekbarMarkers = renderSeekbarMarkers;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', renderBlocks);
   } else {
@@ -108,6 +147,7 @@ function initCallGuide(config) {
             'controls': 0
           },
           events: {
+            'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
@@ -134,7 +174,24 @@ function initCallGuide(config) {
   }
 }
 
+function onPlayerReady(event) {
+  if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+    var duration = ytPlayer.getDuration();
+    if (duration > 0 && window.__renderSeekbarMarkers) {
+      window.__renderSeekbarMarkers(duration);
+    }
+  }
+}
+
 function onPlayerStateChange(event) {
+  // 再生開始時にも総時間を取得してマーカー未描画なら描画
+  if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+    var duration = ytPlayer.getDuration();
+    if (duration > 0 && window.__renderSeekbarMarkers) {
+      window.__renderSeekbarMarkers(duration);
+    }
+  }
+
   if (event.data === YT.PlayerState.PLAYING) {
     if (!checkTimer) {
       checkTimer = setInterval(updateHighlight, 250);

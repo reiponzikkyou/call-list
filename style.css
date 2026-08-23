@@ -395,11 +395,25 @@ header a {
   font-variant-numeric: tabular-nums; /* 数字の横幅を固定 */
 }
 
-/* シークバー（幅一杯に拡張） */
+/* シークバーエリア（マーカー配置のために relative を付与） */
 .tile-seek {
   flex-grow: 1;
   display: flex;
   align-items: center;
+  position: relative; /* JSで生成されるマーカーの位置基準 */
+}
+
+/* コール挿入位置を示すピンマーカー */
+.call-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;             /* マーカーの横幅 */
+  height: 12px;           /* マーカーの高さ */
+  background-color: #ff2d55; /* 強調カラー（ピンク/赤系） */
+  border-radius: 2px;
+  pointer-events: none;  /* シークバーのドラッグやクリック操作を阻害しない */
+  z-index: 2;            /* シークバーより手前に表示 */
 }
 
 /* 音量エリア */
@@ -430,6 +444,8 @@ input[type="range"] {
   width: 100%;
   accent-color: #333333;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 
 #volume-bar {
