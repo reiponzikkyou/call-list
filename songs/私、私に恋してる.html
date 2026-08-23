@@ -5,44 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>私、私に恋してる - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    /* 動画プレイヤーのレスポンシブ・サイズ調整設定 */
-    .media-container {
-      width: 100%;
-      max-width: 560px;
-      margin: 0 auto 20px auto;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .media-container iframe {
-      width: 100% !important;
-      aspect-ratio: 16 / 9;
-      height: auto !important;
-      display: block;
-      border: none;
-    }
-
-    /* ハイライト用のスタイル */
-    .call-block {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      transition: background-color 0.3s, border-left 0.3s;
-      border-left: 4px solid transparent;
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-    .call-block.active {
-      background-color: #ffe6ed; /* ハイライト背景色 */
-      border-left: 4px solid var(--primary-color, #ff4785);
-    }
-    .time-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #888;
-      margin-right: 8px;
-    }
-  </style>
 </head>
 <body>
 
@@ -56,82 +18,89 @@
     <div class="card">
       <h1 class="song-title">私、私に恋してる</h1>
 
-      <!-- YouTube API プレーヤー表示エリア（サイズ指定用クラス .media-container を追加） -->
       <div class="media-container">
         <div id="player"></div>
       </div>
 
-      <div class="notice" style="font-size: 0.8rem; color: #666; margin-bottom: 16px;">
+      <div class="notice">
         ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイト（Google Search等）をご確認ください。
+        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
+        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
       </div>
 
-      <!-- コール表（タイムスタンプ＆ハイライト連動） -->
-      <div class="lyrics">
-
-        <!-- イントロ1 -->
-        <div class="call-block" data-start="7" data-end="13">
-          <span class="time-label">0:07~</span>
-          <span class="call">
-            <br>ページ作成のテンプレ
-            <br>ページ作成のテンプレ
-          </span>
-        </div>
-
-      </div>
+      <div class="lyrics" id="call-list-container"></div>
     </div>
   </div>
 
-  <!-- YouTube IFrame Player API スクリプト -->
+  <script src="../player.js"></script>
   <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: 'avXbEdUp_mU', // ★対象の11桁の動画ID
-        playerVars: { 
-          'playsinline': 1,
-          'rel': 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    var checkTimer = null;
-
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        checkTimer = setInterval(updateHighlight, 300);
-      } else {
-        clearInterval(checkTimer);
-      }
-    }
-
-    function updateHighlight() {
-      if (!player || !player.getCurrentTime) return;
-      var currentTime = player.getCurrentTime();
-      var blocks = document.querySelectorAll('.call-block');
-
-      blocks.forEach(function(block) {
-        var start = parseFloat(block.getAttribute('data-start'));
-        var end = parseFloat(block.getAttribute('data-end'));
-
-        if (currentTime >= start && currentTime < end) {
-          block.classList.add('active');
-        } else {
-          block.classList.remove('active');
-        }
-      });
-    }
+    initCallGuide({
+      videoId: "avXbEdUp_mU",
+      calls: [
+        { start: "0:12", end: "0:25", call: "うっおいうっおいうっおいうっおい\n👏 👏👏 👏 👏しゃーいくぞ\nタイガーファイヤーサイバーファイバーダイバーバイバージャージャー" },
+        { start: "0:28", end: "0:31", lyrics: "大丈夫とも言ってない", call: "あ！あ！あー(名前)！" },
+        { start: "0:35", end: "0:38", lyrics: "笑ってるの", call: "おーれーの！(名前)！" },
+        { start: "0:40", end: "0:44", lyrics: "そんなかわいい憧れ", call: "あ！あ！あー(名前)！" },
+        { start: "0:48", end: "0:50", lyrics: "\"上手\"になって", call: "おーれーの！(名前)！" },
+        { start: "1:07", end: "1:10", lyrics: "知らない分かんないだらけのMe, Life", call: "おーふっふー" },
+        { start: "1:10", end: "1:13", lyrics: "不安だね不安だよでも大好きだ", call: "👏👏フワフワ" },
+        { start: "1:13", end: "1:16", lyrics: "もうハズいくらいありのままだけど", call: "はいはいせーの！はいせーの！" },
+        { start: "1:16", end: "1:19", lyrics: "こんなに私に恋してる", call: "おーいおいおいおいおいおい" },
+        { start: "1:20", end: "1:23", lyrics: "か弱くても照らす光", call: "おーふっふー" },
+        { start: "1:23", end: "1:26", lyrics: "全部を抱きしめてくれる闇", call: "👏👏フワフワ" },
+        { start: "1:36", end: "1:48", call: "うっおいうっおいうっおいうっおい\n👏 👏👏 👏 👏しゃーいくぞ\n虎火人造繊維海女振動化繊" },
+        { start: "1:51", end: "1:55", lyrics: "大げさに着飾っている", call: "あ！あ！あー(名前)！" },
+        { start: "1:58", end: "2:01", lyrics: "それは良いコト？", call: "おーれーの！(名前)！" },
+        { start: "2:04", end: "2:08", lyrics: "小さなリボンが揺れる", call: "あ！あ！あー(名前)！" },
+        { start: "2:08", end: "2:14", lyrics: "わからなくなる", call: "超絶可愛い(名前)！" },
+        { start: "2:32", end: "2:33", lyrics: "私の Key Word", call: "おーふっふー" },
+        { start: "2:35", end: "2:36", lyrics: "あぁ大好きだ", call: "👏👏フワフワ" },
+        { start: "2:37", end: "2:40", lyrics: "イタいくらいさらけ出しちゃって", call: "はいせーの はいせーの" },
+        { start: "2:40", end: "2:43", lyrics: "そんなに私に恋してる", call: "おーいおいおいおいおいおいおい" },
+        { start: "2:42", end: "2:46", lyrics: "私だけが知ってるあなたのこと", call: "おーふっふー" },
+        { start: "2:46", end: "2:49", lyrics: "あなただけが知ってる私", call: "👏👏フワフワ" },
+        { start: "3:13", end: "3:29", call: "言いたいことがあるんだよ！\n夢のような舞踏会！\n12時の鐘が鳴ったとしても！\nガラスの靴が誰より似合う！\n君は俺のシンデレラ！" },
+        { start: "3:39", end: "3:42", lyrics: "「私、恋してる！」", call: "フー！" },
+        { start: "3:42", end: "3:45", lyrics: "知らない分かんないだらけのMe, Life", call: "おーふっふー" },
+        { start: "3:46", end: "3:48", lyrics: "でも大好きだ", call: "👏👏フワフワ" },
+        { start: "3:48", end: "3:52", lyrics: "ハズいくらいありのままだけど", call: "はいせーの はいせーの" },
+        { start: "3:51", end: "3:55", lyrics: "あなたも私に恋してる", call: "おーいおいおいおいおいおいおい" },
+        { start: "3:54", end: "3:58", lyrics: "それはか弱くても照らす光", call: "おーふっふー" },
+        { start: "3:58", end: "4:01", lyrics: "全部を抱きしめてくれる闇", call: "👏👏フワフワ" },
+        { start: "4:11", end: "4:29", call: "打ち上げろ！打ち上げろ！5!4!321!\n菊！牡丹！瀧！蜂！千輪！葉落！冠菊！柳！花雷！スターマイン！" }
+      ]
+    });
   </script>
+  <br>
+<br>
+<br>
 
+<!-- タイル型カスタムプレイヤー -->
+<div class="tile-player">
+  
+  <!-- 再生/停止 -->
+  <button id="play-pause-btn" class="tile-item tile-btn" aria-label="再生/一時停止">
+    <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" class="hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <!-- 現在時間表示 -->
+  <div class="tile-item tile-time">
+    <span id="current-time">0:00</span>
+  </div>
+
+  <!-- シークバー（横いっぱいに広がる） -->
+  <div class="tile-item tile-seek">
+    <input type="range" id="seek-bar" value="0" min="0" max="100" step="0.1">
+  </div>
+
+  <!-- 音量 -->
+  <div class="tile-item tile-volume">
+    <button id="mute-btn" class="tile-icon-btn" aria-label="ミュート切替">
+      <svg id="icon-volume" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+      <svg id="icon-muted" viewBox="0 0 24 24" class="hidden"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    </button>
+    <input type="range" id="volume-bar" value="100" min="0" max="100">
+  </div>
 </body>
 </html>
