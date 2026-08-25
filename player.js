@@ -303,7 +303,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function onPlayerReady(event) {
+  // プレイヤー準備完了時
+function onPlayerReady(event) {
   const playPauseBtn = document.getElementById('play-pause-btn');
 
   // 再生/一時停止ボタンのクリックイベント
