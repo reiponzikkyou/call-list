@@ -303,50 +303,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // プレイヤー準備完了時
-function onPlayerReady(event) {
-  const playPauseBtn = document.getElementById('play-pause-btn');
-
-  // 再生/一時停止ボタンのクリックイベント
-  playPauseBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
+  function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    videoId: 'M7lc1UVf-VE', // 再生したいYouTubeの動画ID
+    playerVars: {
+      'playsinline': 1,
+      'controls': 0
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
     }
   });
-
-  // 動画タイトルの取得・表示（オプション）
-  const videoData = player.getVideoData();
-  if (videoData && videoData.title) {
-    document.getElementById('track-title').innerText = videoData.title;
-  }
 }
 
-// 再生状態が変化した時（再生中・停止中など）
+function onPlayerReady(event) {
+  // 準備完了時に手動で情報をセット（初期値）
+  updateTrackInfo('M7lc1UVf-VE', 'natsukashii (old version)', 'jacal');
+}
+
 function onPlayerStateChange(event) {
   const playPauseBtn = document.getElementById('play-pause-btn');
 
-  // YT.PlayerState.PLAYING === 1
   if (event.data === YT.PlayerState.PLAYING) {
-    isPlaying = true;
-    playPauseBtn.innerText = 'pause'; // アイコンを一時停止に変更
-  } 
-  // YT.PlayerState.PAUSED === 2 または ENDED === 0
-  else {
-    isPlaying = false;
-    playPauseBtn.innerText = 'play_arrow'; // アイコンを再生に変更
+    playPauseBtn.innerText = 'pause';
+  } else {
+    playPauseBtn.innerText = 'play_arrow';
   }
 }
 
-// 別の曲（動画）に切り替える関数
-function loadNewTrack(videoId, title, artist, artUrl) {
+// 動画IDからサムネイルURLを自動生成して画面にセットする関数
+function updateTrackInfo(videoId, title, artist) {
+  // YouTubeの高品質サムネイルURL
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+  document.getElementById('track-art').src = thumbnailUrl;
+  document.getElementById('track-title').innerText = title;
+  document.getElementById('track-artist').innerText = artist;
+}
+
+// 曲を切り替える時はこの関数を呼ぶ
+function changeTrack(videoId, title, artist) {
   if (player && player.loadVideoById) {
     player.loadVideoById(videoId);
-    document.getElementById('track-title').innerText = title;
-    document.getElementById('track-artist').innerText = artist;
-    document.getElementById('track-art').src = artUrl;
+    updateTrackInfo(videoId, title, artist);
   }
 }
-
+  
 });
