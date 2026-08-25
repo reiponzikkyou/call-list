@@ -302,4 +302,50 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  function onPlayerReady(event) {
+  const playPauseBtn = document.getElementById('play-pause-btn');
+
+  // 再生/一時停止ボタンのクリックイベント
+  playPauseBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  });
+
+  // 動画タイトルの取得・表示（オプション）
+  const videoData = player.getVideoData();
+  if (videoData && videoData.title) {
+    document.getElementById('track-title').innerText = videoData.title;
+  }
+}
+
+// 再生状態が変化した時（再生中・停止中など）
+function onPlayerStateChange(event) {
+  const playPauseBtn = document.getElementById('play-pause-btn');
+
+  // YT.PlayerState.PLAYING === 1
+  if (event.data === YT.PlayerState.PLAYING) {
+    isPlaying = true;
+    playPauseBtn.innerText = 'pause'; // アイコンを一時停止に変更
+  } 
+  // YT.PlayerState.PAUSED === 2 または ENDED === 0
+  else {
+    isPlaying = false;
+    playPauseBtn.innerText = 'play_arrow'; // アイコンを再生に変更
+  }
+}
+
+// 別の曲（動画）に切り替える関数
+function loadNewTrack(videoId, title, artist, artUrl) {
+  if (player && player.loadVideoById) {
+    player.loadVideoById(videoId);
+    document.getElementById('track-title').innerText = title;
+    document.getElementById('track-artist').innerText = artist;
+    document.getElementById('track-art').src = artUrl;
+  }
+}
+
 });
