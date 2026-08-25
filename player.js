@@ -307,7 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
 class MusicPlayer extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-      <div class="tile-player">
+<!-- タイル型カスタムプレイヤー -->
+<div class="tile-player">
 
   <!-- 現在時間表示 -->
   <div class="tile-item tile-time">
