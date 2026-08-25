@@ -372,7 +372,7 @@ header a {
   padding: 4px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .tile-btn svg {
@@ -423,13 +423,6 @@ header a {
   z-index: 2;            /* シークバーより手前に表示 */
 }
 
-/* 音量エリア */
-.tile-volume {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
 
 .tile-icon-btn {
   background: none;
@@ -453,10 +446,6 @@ input[type="range"] {
   cursor: pointer;
   position: relative;
   z-index: 1;
-}
-
-#volume-bar {
-  width: 80px;
 }
 
 /* 非表示切り替え用 */
