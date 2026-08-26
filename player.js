@@ -328,6 +328,10 @@ class MusicPlayer extends HTMLElement {
 
 </div>
     `;
+    if (typeof initTilePlayer === 'function') {
+      initTilePlayer(this);
+    }
+
   }
 }
 customElements.define('music-player', MusicPlayer);
