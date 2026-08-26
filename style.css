@@ -421,6 +421,7 @@ header a {
   
   pointer-events: none;  /* シークバーのドラッグやクリック操作を阻害しない */
   z-index: 2;            /* シークバーより手前に表示 */
+  opacity: 0.5;
 }
 
 
