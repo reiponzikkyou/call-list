@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:; script-src * 'unsafe-inline' 'unsafe-eval' blob: https://www.youtube.com https://s.ytimg.com; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline' https:; frame-src * https://www.youtube.com; style-src * 'unsafe-inline';">
-  <title>コール辞書ジェネレーター - Call Guide Studio</title>
+  <title>コールタイミングメーカー</title>
   <style>
     :root {
       --primary-color: #ff4785;
@@ -201,6 +201,16 @@
     .item-row:hover {
       background: #fff5f7;
     }
+    .item-row.preview-active,
+    .item-row.preview-active:nth-child(even),
+    .item-row.preview-active:hover {
+      background: #ffe5ee;
+      box-shadow: inset 4px 0 0 var(--primary-color);
+    }
+    .item-row.preview-active .time-badge {
+      color: #fff;
+      background: var(--primary-color);
+    }
     .item-info {
       flex: 1;
       display: flex;
@@ -304,7 +314,7 @@
 
   <div class="app-header">
     <div class="app-title">
-      <span>🎵</span> コール辞書ジェネレーター Studio
+      <span>🎵</span> コールタイミングメーカー
     </div>
     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
       <button class="btn btn-outline btn-sm" id="browser-open-btn" onclick="openExternalBrowser()" style="background: #eef2ff; color: #4338ca; border-color: #c7d2fe;">🌐 ブラウザで開く</button>
@@ -467,6 +477,7 @@
     var ytPlayer = null;
     var timerInterval = null;
     var lastKnownTime = 0;
+    var lastPreviewIndex = -1;
 
     // ブラウザで開く機能
     function openExternalBrowser() {
@@ -523,6 +534,7 @@
             if (typeof sec === 'number' && !isNaN(sec)) {
               lastKnownTime = sec;
               document.getElementById('current-time-text').textContent = formatSeconds(sec);
+              updateCallPreviewHighlight(sec);
             }
           } catch(e) {}
         }
@@ -675,6 +687,29 @@
       return parseFloat(t)||0;
     }
 
+    function updateCallPreviewHighlight(currentTime) {
+      var rows = document.querySelectorAll('#call-items-list .item-row');
+      var activeIndex = -1;
+      rows.forEach(function(row, index) {
+        var start = parseFloat(row.dataset.start);
+        var end = parseFloat(row.dataset.end);
+        var isActive = !isNaN(start) && !isNaN(end) && end > start &&
+          currentTime >= start && currentTime < end;
+        row.classList.toggle('preview-active', isActive);
+        if (isActive) activeIndex = index;
+      });
+
+      if (activeIndex !== -1 && activeIndex !== lastPreviewIndex) {
+        var container = document.getElementById('call-items-list');
+        var activeRow = rows[activeIndex];
+        var containerRect = container.getBoundingClientRect();
+        var rowRect = activeRow.getBoundingClientRect();
+        if (rowRect.top < containerRect.top) container.scrollTop -= containerRect.top - rowRect.top;
+        if (rowRect.bottom > containerRect.bottom) container.scrollTop += rowRect.bottom - containerRect.bottom;
+      }
+      lastPreviewIndex = activeIndex;
+    }
+
     function playCallSection(index) {
       var item = callDataList[index];
       var sec = parseTimeToSec(item.start);
@@ -700,6 +735,8 @@
       callDataList.forEach(function(item, idx) {
         var row = document.createElement('div');
         row.className = 'item-row';
+        row.dataset.start = parseTimeToSec(item.start);
+        row.dataset.end = parseTimeToSec(item.end);
 
         var info = document.createElement('div');
         info.className = 'item-info';

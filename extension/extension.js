@@ -20,7 +20,7 @@ function activate(context) {
       // 新しいWebviewパネルを作成
       currentPanel = vscode.window.createWebviewPanel(
         'callGuideEditor',
-        '🎵 コール辞書エディタ Studio',
+        '🎵 コールタイミングメーカー',
         vscode.ViewColumn.Beside, // 横並びで開く
         {
           enableScripts: true,
@@ -106,4 +106,3 @@ module.exports = {
   activate,
   deactivate
 };
-
