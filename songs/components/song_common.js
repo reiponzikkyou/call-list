@@ -41,6 +41,49 @@ function installSongShareButton() {
   title.parentNode.insertBefore(row, title);
   row.appendChild(title);
 
+  const actions = document.createElement('div');
+  actions.className = 'song-title-actions';
+
+  const highlightButton = document.createElement('button');
+  highlightButton.type = 'button';
+  highlightButton.className = 'highlight-toggle-btn';
+  highlightButton.setAttribute('aria-label', 'コールのハイライト表示を切り替える');
+
+  const setHighlightEnabled = (enabled) => {
+    document.body.classList.toggle('highlight-disabled', !enabled);
+    highlightButton.classList.toggle('is-off', !enabled);
+    highlightButton.setAttribute('aria-pressed', String(enabled));
+    highlightButton.innerHTML = `
+      <span class="highlight-toggle-dot" aria-hidden="true"></span>
+      <span>ハイライト ${enabled ? 'ON' : 'OFF'}</span>
+    `;
+    if (!enabled) {
+      document.querySelectorAll('.call-block.active').forEach((block) => block.classList.remove('active'));
+    } else if (typeof window.updateHighlight === 'function') {
+      window.updateHighlight();
+    }
+  };
+
+  let highlightEnabled = true;
+  try {
+    highlightEnabled = localStorage.getItem('call-guide-highlight') !== 'off';
+  } catch (error) {
+    // 保存領域が使えない場合はONを既定値にする
+  }
+  setHighlightEnabled(highlightEnabled);
+
+  highlightButton.addEventListener('click', () => {
+    highlightEnabled = !highlightEnabled;
+    setHighlightEnabled(highlightEnabled);
+    try {
+      localStorage.setItem('call-guide-highlight', highlightEnabled ? 'on' : 'off');
+    } catch (error) {
+      // 保存できなくても現在のページでは切り替えを反映する
+    }
+  });
+
+  actions.appendChild(highlightButton);
+
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'song-share-btn';
@@ -64,7 +107,8 @@ function installSongShareButton() {
     }
   });
 
-  row.appendChild(button);
+  actions.appendChild(button);
+  row.appendChild(actions);
 }
 
 if (document.readyState === 'loading') {

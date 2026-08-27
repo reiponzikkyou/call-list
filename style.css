@@ -393,6 +393,13 @@ header a {
   border-bottom: 0;
 }
 
+.song-title-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
 .song-share-btn {
   display: inline-flex;
   flex: 0 0 auto;
@@ -422,6 +429,56 @@ header a {
   border-color: rgba(255, 77, 141, .5);
   color: var(--primary-bright);
   background: rgba(255, 77, 141, .1);
+}
+
+.highlight-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 77, 141, .38);
+  border-radius: 999px;
+  color: var(--primary-bright);
+  background: rgba(255, 77, 141, .1);
+  cursor: pointer;
+  font: inherit;
+  font-size: .75rem;
+  font-weight: 750;
+  white-space: nowrap;
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.highlight-toggle-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 0 10px rgba(255, 77, 141, .8);
+  transition: background .2s, box-shadow .2s;
+}
+
+.highlight-toggle-btn.is-off {
+  border-color: var(--border-color);
+  color: var(--muted-color);
+  background: rgba(255, 255, 255, .04);
+}
+
+.highlight-toggle-btn.is-off .highlight-toggle-dot {
+  background: #686878;
+  box-shadow: none;
+}
+
+.highlight-toggle-btn:hover,
+.highlight-toggle-btn:focus-visible {
+  border-color: var(--primary-bright);
+  background: rgba(255, 77, 141, .16);
+}
+
+@media (max-width: 560px) {
+  .song-title-row { align-items: flex-start; flex-wrap: wrap; padding-bottom: 10px; }
+  .song-title-actions { width: 100%; justify-content: flex-end; }
+  .highlight-toggle-btn, .song-share-btn { justify-content: center; }
 }
 
 song-navigation,

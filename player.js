@@ -216,13 +216,14 @@ function updateHighlight() {
   var currentTime = ytPlayer.getCurrentTime();
   var duration = ytPlayer.getDuration();
   var blocks = document.querySelectorAll('.call-block');
+  var highlightEnabled = !document.body.classList.contains('highlight-disabled');
 
   // 1. コールブロックのハイライト
   blocks.forEach(function(block) {
     var start = parseFloat(block.getAttribute('data-start'));
     var end = parseFloat(block.getAttribute('data-end'));
 
-    if (!isNaN(start) && !isNaN(end) && end > start && currentTime >= start && currentTime < end) {
+    if (highlightEnabled && !isNaN(start) && !isNaN(end) && end > start && currentTime >= start && currentTime < end) {
       block.classList.add('active');
     } else {
       block.classList.remove('active');
