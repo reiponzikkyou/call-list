@@ -453,3 +453,103 @@ input[type="range"] {
 .hidden {
   display: none !important;
 }
+
+/* Modern dark theme */
+:root {
+  --primary-color: #ff4d8d;
+  --primary-bright: #ff75a7;
+  --bg-color: #09090f;
+  --card-bg: #14141e;
+  --card-hover: #1b1b28;
+  --text-color: #f5f5f7;
+  --muted-color: #9292a3;
+  --call-color: #ff6b9f;
+  --border-color: rgba(255, 255, 255, 0.09);
+}
+
+body {
+  background: radial-gradient(circle at 15% 0%, rgba(255, 71, 133, 0.13), transparent 30rem), radial-gradient(circle at 90% 30%, rgba(105, 80, 255, 0.08), transparent 28rem), var(--bg-color);
+  min-height: 100vh;
+  padding-bottom: 40px;
+  overflow-x: hidden;
+}
+
+header {
+  padding: 30px 20px 24px;
+  background: rgba(9, 9, 15, 0.78);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: none;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.header-inner { max-width: 760px; margin: 0 auto; }
+.eyebrow, .section-number { color: var(--primary-bright); font-size: .7rem; font-weight: 800; letter-spacing: .18em; }
+header h1 { margin: 5px 0 10px; font-size: clamp(1.55rem, 6vw, 2.25rem); line-height: 1.2; letter-spacing: -.04em; }
+.status { display: inline-flex; align-items: center; gap: 7px; color: var(--muted-color); font-size: .75rem; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 12px rgba(251, 191, 36, .75); }
+
+.container { max-width: 760px; margin: 28px auto; padding: 0 18px; }
+.card { border: 1px solid var(--border-color); box-shadow: 0 18px 50px rgba(0, 0, 0, .2); }
+.intro-card { padding: 22px; border: 1px solid var(--border-color); border-radius: 18px; background: linear-gradient(135deg, rgba(255, 77, 141, .12), rgba(255, 255, 255, .035)); }
+.intro-card p { margin-bottom: 5px; font-size: 1rem; font-weight: 700; }
+.intro-card span { color: var(--muted-color); font-size: .84rem; line-height: 1.7; }
+.content-section { margin-top: 34px; }
+.section-header { display: flex; align-items: end; justify-content: space-between; margin-bottom: 14px; }
+.section-header > div { display: flex; align-items: baseline; gap: 10px; }
+.section-header h2 { font-size: 1.15rem; letter-spacing: -.02em; }
+.section-label, .song-count { color: var(--muted-color); font-size: .72rem; letter-spacing: .06em; }
+.widget-card { overflow: hidden; padding: 10px; border: 1px solid var(--border-color); border-radius: 16px; background: var(--card-bg); }
+.topics-widget-frame { position: relative; width: 100%; max-width: 600px; height: 144px; margin: 0 auto; overflow: hidden; border-radius: 9px; }
+.topics-widget { position: absolute; top: 0; left: 0; display: block; width: 600px; height: 144px; border: 0; transform-origin: top left; }
+.widget-credit { margin: 8px 4px 1px; color: var(--muted-color); text-align: right; font-size: .68rem; }
+.widget-credit a { margin-left: 4px; color: #b6b6c3; font-weight: 700; text-decoration: none; }
+
+.song-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.song-item { margin-bottom: 0; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: none; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.song-item a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; min-height: 52px; padding: 15px 16px; font-size: .9rem; font-weight: 650; }
+.song-item a > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.song-item:hover { transform: translateY(-3px); border-color: rgba(255, 77, 141, .45); background: var(--card-hover); }
+.arrow { color: var(--primary-bright); font-size: 1rem; }
+
+.tool-card { display: flex; gap: 18px; margin-top: 36px; padding: 24px; border: 1px solid rgba(255, 77, 141, .25); border-radius: 18px; background: linear-gradient(135deg, #1c1520, #13131d); }
+.tool-icon { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border-radius: 14px; background: var(--primary-color); box-shadow: 0 10px 28px rgba(255, 77, 141, .25); font-size: 1.4rem; font-weight: 900; }
+.tool-content h2 { margin: 3px 0 6px; font-size: 1.08rem; }
+.tool-content p { margin-bottom: 15px; color: var(--muted-color); font-size: .82rem; line-height: 1.65; }
+.btn { display: inline-flex; align-items: center; gap: 18px; padding: 9px 14px; border-radius: 9px; text-decoration: none; font-size: .8rem; font-weight: 750; }
+.btn-primary { color: #fff; background: var(--primary-color); transition: background .2s, transform .2s; }
+.btn-primary:hover { background: var(--primary-bright); transform: translateY(-1px); }
+footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; font-weight: 700; letter-spacing: .2em; }
+
+.notice, .topic-date, .topic-desc, .time-label { color: var(--muted-color); }
+.call-block { border-bottom-color: var(--border-color); }
+.call-block:hover { background-color: rgba(255, 255, 255, .04); }
+.call-block.active { background-color: rgba(255, 77, 141, .13); }
+.tile-player { background-color: #101018; border-top-color: var(--border-color); }
+.tile-btn svg, .tile-icon-btn svg { fill: var(--text-color); }
+.tile-time { color: var(--muted-color); }
+
+@media (max-width: 560px) {
+  header { padding: 22px max(16px, env(safe-area-inset-right)) 18px max(16px, env(safe-area-inset-left)); }
+  header h1 { margin-top: 3px; font-size: clamp(1.35rem, 6.5vw, 1.7rem); }
+  .container { margin: 20px auto; padding-right: max(14px, env(safe-area-inset-right)); padding-left: max(14px, env(safe-area-inset-left)); }
+  .intro-card { padding: 18px; border-radius: 15px; }
+  .content-section { margin-top: 28px; }
+  .song-list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .song-item a { padding: 13px 14px; }
+  .widget-card { padding: 7px; border-radius: 13px; }
+  .tool-card { padding: 20px; }
+  footer { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 380px) {
+  .section-header { align-items: flex-start; }
+  .section-label, .song-count { padding-top: 4px; }
+  .tool-card { flex-direction: column; gap: 14px; padding: 18px; }
+  .tool-icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; }
+  .btn { width: 100%; justify-content: space-between; min-height: 44px; }
+}
+
+@media (hover: none) {
+  .song-item:hover, .btn-primary:hover { transform: none; }
+}
