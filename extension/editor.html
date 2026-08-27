@@ -350,9 +350,12 @@
 
         <!-- 再生コントローラー & 現在時間 -->
         <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 8px 12px; border-radius: 6px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <span style="font-size: 0.85rem; color: #666;">再生時間:</span>
             <span class="current-time-display" id="current-time-text">0:00.00</span>
+            <label for="timing-correction-input" style="font-size: 0.78rem; color: #666; margin-left: 8px; white-space: nowrap;">押下補正:</label>
+            <input type="text" inputmode="decimal" id="timing-correction-input" value="0.00" aria-label="ボタン押下のタイミング補正秒数" title="現在時刻から差し引く秒数（例: 0.20）" style="width: 62px; padding: 5px 7px; font-family: monospace;" />
+            <span style="font-size: 0.75rem; color: #888;">秒前</span>
           </div>
           <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
             <button class="btn btn-outline btn-sm" onclick="togglePlayPause()">⏯ 再生/一時停止</button>
@@ -590,20 +593,26 @@
       ytPlayer.seekTo(target, true);
     }
 
-    function setCurrentTimeToStart() {
-      var cur = 0;
+    function getTimingCorrection() {
+      var input = document.getElementById('timing-correction-input');
+      var correction = input ? parseFloat(input.value) : 0;
+      return isNaN(correction) ? 0 : correction;
+    }
+
+    function getCorrectedCurrentTime() {
+      var current = lastKnownTime;
       if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-        cur = ytPlayer.getCurrentTime() || lastKnownTime;
+        current = ytPlayer.getCurrentTime() || lastKnownTime;
       }
-      document.getElementById('start-time-input').value = formatSeconds(cur);
+      return Math.max(0, current - getTimingCorrection());
+    }
+
+    function setCurrentTimeToStart() {
+      document.getElementById('start-time-input').value = formatSeconds(getCorrectedCurrentTime());
     }
 
     function setCurrentTimeToEnd() {
-      var cur = 0;
-      if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-        cur = ytPlayer.getCurrentTime() || lastKnownTime;
-      }
-      document.getElementById('end-time-input').value = formatSeconds(cur);
+      document.getElementById('end-time-input').value = formatSeconds(getCorrectedCurrentTime());
     }
 
     // コール追加・更新
