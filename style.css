@@ -731,3 +731,107 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
 @media (hover: none) {
   .song-item:hover, .btn-primary:hover { transform: none; }
 }
+
+/* よく使うコール（MIX）一覧 */
+.mix-intro {
+  margin-top: 18px;
+}
+
+.mix-list {
+  display: grid;
+  gap: 28px;
+}
+
+.mix-category {
+  display: grid;
+  gap: 14px;
+}
+
+.mix-category-title {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.mix-card {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .16);
+}
+
+.mix-name {
+  margin-bottom: 14px;
+  color: var(--primary-bright);
+  font-size: 1.15rem;
+}
+
+.mix-detail {
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .04);
+}
+
+.mix-label {
+  display: none;
+}
+
+.mix-words {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.9;
+}
+
+.mix-video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  margin-top: 12px;
+  color: var(--primary-bright);
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.mix-video-link:hover,
+.mix-video-link:focus-visible {
+  text-decoration: underline;
+}
+
+.mix-used-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+  font-size: .72rem;
+}
+
+.mix-used-in-label {
+  margin-right: 2px;
+  color: var(--muted-color);
+}
+
+.mix-used-in a,
+.mix-used-in-empty {
+  padding: 3px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.mix-used-in a:hover,
+.mix-used-in a:focus-visible {
+  border-color: var(--primary-bright);
+  color: var(--primary-bright);
+}
+
+.mix-used-in-empty {
+  color: var(--muted-color);
+}
