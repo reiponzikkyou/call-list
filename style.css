@@ -914,6 +914,14 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
 .history-event {
   position: relative;
   padding-left: 36px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22, 1, .36, 1);
+}
+
+.history-event.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .history-node {
@@ -927,6 +935,21 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
   border-radius: 50%;
   background: var(--primary-color);
   box-shadow: 0 0 0 5px rgba(255, 77, 141, .14), 0 0 18px var(--primary-color);
+}
+
+.history-event.is-latest .history-node::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid rgba(255, 117, 167, .75);
+  border-radius: 50%;
+  animation: latest-node-ripple 2.4s ease-out infinite;
+}
+
+@keyframes latest-node-ripple {
+  0%, 28% { opacity: 0; transform: scale(.75); }
+  38% { opacity: .9; }
+  78%, 100% { opacity: 0; transform: scale(2.8); }
 }
 
 .history-now {
@@ -1009,6 +1032,18 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
   font-weight: 800;
 }
 
+/* ページ共通のスクロール表示 */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+
+.reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 420px) {
   .history-card:has(.history-image) {
     grid-template-columns: 1fr;
@@ -1017,5 +1052,19 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
   .history-image {
     width: 100%;
     aspect-ratio: 16 / 8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-event,
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .history-event.is-latest .history-node::after {
+    animation: none;
+    display: none;
   }
 }

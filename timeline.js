@@ -66,6 +66,34 @@ function renderTimeline() {
       </article>
     `;
   }).join('');
+
+  installTimelineReveal();
+}
+
+function installTimelineReveal() {
+  const cards = [...document.querySelectorAll('.history-event')];
+
+  if (!('IntersectionObserver' in window)) {
+    cards.forEach((card) => card.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+      .forEach((entry, index) => {
+        window.setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, index * 110);
+        observer.unobserve(entry.target);
+      });
+  }, {
+    threshold: 0.14,
+    rootMargin: '0px 0px -5% 0px'
+  });
+
+  cards.forEach((card) => observer.observe(card));
 }
 
 renderTimeline();

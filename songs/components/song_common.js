@@ -4,6 +4,10 @@ class SongNavigation extends HTMLElement {
   }
 }
 
+const revealScript = document.createElement('script');
+revealScript.src = new URL('../../reveal.js?v=1', document.currentScript.src).href;
+document.head.appendChild(revealScript);
+
 class CallGuideNotice extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
