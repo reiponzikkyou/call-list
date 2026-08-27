@@ -21,12 +21,12 @@ function parseTimeToSeconds(time) {
 
 function formatSecondsToDisplay(startSec) {
   var min = Math.floor(startSec / 60);
-  var sec = Math.round((startSec - min * 60) * 10) / 10;
+  var sec = Math.round((startSec - min * 60) * 100) / 100;
   if (sec >= 60) {
     min += 1;
     sec = 0;
   }
-  return min + ':' + (sec < 10 ? '0' : '') + sec.toFixed(1) + '~';
+  return min + ':' + (sec < 10 ? '0' : '') + sec.toFixed(2) + '~';
 }
 
 function escapeHtml(str) {
@@ -198,7 +198,7 @@ function onPlayerStateChange(event) {
 
   if (event.data === YT.PlayerState.PLAYING) {
     if (!checkTimer) {
-      checkTimer = setInterval(updateHighlight, 100);
+      checkTimer = setInterval(updateHighlight, 10);
     }
   } else {
     if (checkTimer) {

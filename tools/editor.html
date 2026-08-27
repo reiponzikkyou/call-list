@@ -353,12 +353,12 @@
         <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 8px 12px; border-radius: 6px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 0.85rem; color: #666;">再生時間:</span>
-            <span class="current-time-display" id="current-time-text">0:00.0</span>
+            <span class="current-time-display" id="current-time-text">0:00.00</span>
           </div>
           <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
             <button class="btn btn-outline btn-sm" onclick="togglePlayPause()">⏯ 再生/一時停止</button>
-            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(-0.1)">−0.1秒</button>
-            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(0.1)">＋0.1秒</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(-0.01)">−0.01秒</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(0.01)">＋0.01秒</button>
             <button class="btn btn-outline btn-sm" onclick="seekRelative(-5)">⏪ 5秒戻る</button>
             <button class="btn btn-outline btn-sm" onclick="seekRelative(5)">⏩ 5秒進む</button>
           </div>
@@ -373,14 +373,14 @@
           <div class="form-group" style="flex: 1;">
             <label>開始時間 (start):</label>
             <div class="form-row">
-              <input type="text" id="start-time-input" placeholder="例: 0:07">
+              <input type="text" id="start-time-input" placeholder="例: 0:00">
               <button class="btn btn-outline btn-sm" onclick="setCurrentTimeToStart()" title="動画の現在時間をセット">⏱ 現在時間</button>
             </div>
           </div>
           <div class="form-group" style="flex: 1;">
             <label>終了時間 (end):</label>
             <div class="form-row">
-              <input type="text" id="end-time-input" placeholder="例: 0:13">
+              <input type="text" id="end-time-input" placeholder="例: 0:10">
               <button class="btn btn-outline btn-sm" onclick="setCurrentTimeToEnd()" title="動画の現在時間をセット">⏱ 現在時間</button>
             </div>
           </div>
@@ -388,12 +388,12 @@
 
         <div class="form-group">
           <label>歌詞 (lyrics) <span style="font-size: 0.75rem; color: #888;">※間奏など歌詞がない場合は空欄OK</span>:</label>
-          <input type="text" id="lyrics-input" placeholder="例: 恋した君の愛は全部私に委ねて？">
+          <input type="text" id="lyrics-input">
         </div>
 
         <div class="form-group">
           <label>コール内容 (call):</label>
-          <textarea id="call-input" placeholder="例: 萌え萌えきゅん萌え萌えきゅん萌え萌えきゅんしゃー行かない❌..."></textarea>
+          <textarea id="call-input"></textarea>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
@@ -539,18 +539,18 @@
             }
           } catch(e) {}
         }
-      }, 100);
+      }, 10);
     }
 
     function formatSeconds(sec) {
-      if (isNaN(sec)) return '0:00.0';
+      if (isNaN(sec)) return '0:00.00';
       var m = Math.floor(sec / 60);
-      var s = Math.round((sec - m * 60) * 10) / 10;
+      var s = Math.round((sec - m * 60) * 100) / 100;
       if (s >= 60) {
         m += 1;
         s = 0;
       }
-      return m + ':' + (s < 10 ? '0' : '') + s.toFixed(1);
+      return m + ':' + (s < 10 ? '0' : '') + s.toFixed(2);
     }
 
     function extractVideoId(input) {
