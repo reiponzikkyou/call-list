@@ -1068,3 +1068,20 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
     display: none;
   }
 }
+
+/* 全ページ共通：角丸を使用しない */
+* {
+  border-radius: 0 !important;
+}
+
+/* 状態や位置を示す円形パーツは形を維持する */
+.status-dot,
+.highlight-toggle-dot,
+.call-marker,
+.history-node,
+#seek-bar::-webkit-slider-thumb,
+#seek-bar::-moz-range-thumb,
+#volume-bar::-webkit-slider-thumb,
+#volume-bar::-moz-range-thumb {
+  border-radius: 50% !important;
+}
