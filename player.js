@@ -239,6 +239,7 @@ function updateHighlight() {
   var seekBar = document.getElementById('seek-bar');
   if (seekBar && duration > 0) {
     seekBar.value = (currentTime / duration) * 100;
+    seekBar.style.setProperty('--seek-progress', seekBar.value + '%');
   }
 }
 
@@ -278,6 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
       var duration = ytPlayer.getDuration();
       var seekToTime = duration * (seekBar.value / 100);
+      seekBar.style.setProperty('--seek-progress', seekBar.value + '%');
       ytPlayer.seekTo(seekToTime, true);
     });
   }

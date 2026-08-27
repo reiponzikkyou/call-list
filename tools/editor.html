@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:; script-src * 'unsafe-inline' 'unsafe-eval' blob: https://www.youtube.com https://s.ytimg.com; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline' https:; frame-src * https://www.youtube.com; style-src * 'unsafe-inline';">
-  <title>コールタイミングメーカー</title>
+  <title>コールタイミングエディタ</title>
   <style>
     :root {
       --primary-color: #ff4785;
@@ -314,7 +314,7 @@
 
   <div class="app-header">
     <div class="app-title">
-      <span>🎵</span> コールタイミングメーカー
+      <span>🎵</span> コールタイミングエディタ
     </div>
     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
       <button class="btn btn-outline btn-sm" id="browser-open-btn" onclick="openExternalBrowser()" style="background: #eef2ff; color: #4338ca; border-color: #c7d2fe;">🌐 ブラウザで開く</button>
@@ -355,8 +355,8 @@
             <span style="font-size: 0.85rem; color: #666;">再生時間:</span>
             <span class="current-time-display" id="current-time-text">0:00.00</span>
             <label for="timing-correction-input" style="font-size: 0.78rem; color: #666; margin-left: 8px; white-space: nowrap;">押下補正:</label>
-            <input type="text" inputmode="decimal" id="timing-correction-input" value="0.00" aria-label="ボタン押下のタイミング補正秒数" title="現在時刻から差し引く秒数（例: 0.20）" style="width: 62px; padding: 5px 7px; font-family: monospace;" />
-            <span style="font-size: 0.75rem; color: #888;">秒前</span>
+            <input type="text" inputmode="decimal" id="timing-correction-input" value="+0.00" placeholder="±0.00" aria-label="ボタン押下のタイミング補正秒数" title="＋は現在時刻より後、−は現在時刻より前（例: +0.10 / -0.10）" style="width: 68px; padding: 5px 7px; font-family: monospace;" />
+            <span style="font-size: 0.75rem; color: #888;">秒</span>
           </div>
           <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
             <button class="btn btn-outline btn-sm" onclick="togglePlayPause()">⏯ 再生/一時停止</button>
@@ -605,7 +605,7 @@
       if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
         current = ytPlayer.getCurrentTime() || lastKnownTime;
       }
-      return Math.max(0, current - getTimingCorrection());
+      return Math.max(0, current + getTimingCorrection());
     }
 
     function setCurrentTimeToStart() {
@@ -800,23 +800,17 @@
 '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
 '  <title>' + escapeHtml(title) + ' - コールガイド</title>\n' +
 '  <link rel="stylesheet" href="../style.css">\n' +
+'  <script src="./components/song_common.js"><\/script>\n' +
 '</head>\n' +
 '<body>\n\n' +
-'  <header>\n' +
-'    <a href="../index.html">← トップへ戻る</a>\n' +
-'  </header>\n\n' +
 '  <div class="container">\n' +
-'    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>\n\n' +
+'    <song-navigation></song-navigation>\n\n' +
 '    <div class="card">\n' +
 '      <h1 class="song-title">' + escapeHtml(title) + '</h1>\n\n' +
 '      <div class="media-container">\n' +
 '        <div id="player"></div>\n' +
 '      </div>\n\n' +
-'      <div class="notice">\n' +
-'        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>\n' +
-'        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>\n' +
-'        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。\n' +
-'      </div>\n\n' +
+'      <call-guide-notice></call-guide-notice>\n\n' +
 '      <div class="lyrics" id="call-list-container"></div>\n' +
 '    </div>\n' +
 '  </div>\n\n' +
@@ -827,6 +821,8 @@
 '      ' + callsCode.replace(/\n/g, '\n      ') + '\n' +
 '    });\n' +
 '  <\/script>\n\n' +
+'  <tile-player></tile-player>\n' +
+'  <script src="./components/tile_player.js"><\/script>\n\n' +
 '</body>\n' +
 '</html>';
     }

@@ -373,6 +373,13 @@ header a {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+song-navigation,
+call-guide-notice {
+  display: block;
 }
 
 .tile-btn svg {
@@ -452,6 +459,73 @@ input[type="range"] {
 /* 非表示切り替え用 */
 .hidden {
   display: none !important;
+}
+
+/* 下部プレイヤーのシークバー */
+#seek-bar {
+  --seek-progress: 0%;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: linear-gradient(to right, var(--primary-color) 0 var(--seek-progress), #3a3a49 var(--seek-progress) 100%);
+  background-size: 100% 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#seek-bar::-webkit-slider-runnable-track {
+  height: 6px;
+  background: transparent;
+  border-radius: 999px;
+}
+
+#seek-bar::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 2px 10px rgba(255, 77, 141, .45);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+#seek-bar::-moz-range-track {
+  height: 6px;
+  border: 0;
+  border-radius: 999px;
+  background: #3a3a49;
+}
+
+#seek-bar::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--primary-color);
+}
+
+#seek-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 2px 10px rgba(255, 77, 141, .45);
+}
+
+#seek-bar:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid rgba(255, 117, 167, .35);
+  outline-offset: 2px;
+}
+
+.tile-home-btn:hover svg,
+.tile-home-btn:focus-visible svg {
+  fill: var(--primary-bright);
 }
 
 /* Modern dark theme */

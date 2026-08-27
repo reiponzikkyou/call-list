@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>残り火 - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
+  <script src="./components/song_common.js"></script>
 </head>
 <body>
 
-  <header>
-    <a href="../index.html">← トップへ戻る</a>
-  </header>
-
   <div class="container">
-    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
+    <song-navigation></song-navigation>
 
     <div class="card">
       <h1 class="song-title">残り火</h1>
@@ -22,11 +19,7 @@
         <div id="player"></div>
       </div>
 
-      <div class="notice">
-        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
-      </div>
+      <call-guide-notice></call-guide-notice>
 
       <div class="lyrics" id="call-list-container"></div>
     </div>

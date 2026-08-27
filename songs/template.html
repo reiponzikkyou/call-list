@@ -6,15 +6,12 @@
   <!-- ★【ステップ1】曲名を設定してください -->
   <title>【曲名】 - コールガイド</title>
   <link rel="stylesheet" href="../style.css">
+  <script src="./components/song_common.js"></script>
 </head>
 <body>
 
-  <header>
-    <a href="../index.html">← トップへ戻る</a>
-  </header>
-
   <div class="container">
-    <a href="../index.html" class="back-btn">← 楽曲一覧に戻る</a>
+    <song-navigation></song-navigation>
 
     <div class="card">
       <!-- ★【ステップ1】曲名を設定してください -->
@@ -25,11 +22,7 @@
         <div id="player"></div>
       </div>
 
-      <div class="notice">
-        ※再生に合わせてコールのタイミングが自動でハイライトされます。<br>
-        ※コールブロックをクリックするとそのタイミングへスキップして再生できます。<br>
-        ※歌詞の全文や正確なフレーズは各種公式音源・歌詞検索サイトをご確認ください。
-      </div>
+      <call-guide-notice></call-guide-notice>
 
       <!-- コール表表示エリア（player.jsで自動生成） -->
       <div class="lyrics" id="call-list-container"></div>
@@ -83,6 +76,9 @@
       ]
     });
   </script>
+
+  <tile-player></tile-player>
+  <script src="./components/tile_player.js"></script>
 
 </body>
 </html>

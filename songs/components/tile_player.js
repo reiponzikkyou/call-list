@@ -17,6 +17,11 @@ class TilePlayer extends HTMLElement {
         <input type="range" id="seek-bar" value="0" min="0" max="100" step="0.1">
     </div>
 
+    <!-- トップページへ戻る -->
+    <a href="../index.html" class="tile-item tile-btn tile-home-btn" aria-label="トップページへ戻る" title="ホーム">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 11.2l1.3 1.5L5 11.7V21h5v-6h4v6h5v-9.3l1.2 1 1.3-1.5L12 3zm5 16h-1v-6H8v6H7v-9l5-4.3 5 4.3v9z"/></svg>
+    </a>
+
         <!-- 再生/停止 -->
     <button id="play-pause-btn" class="tile-item tile-btn" aria-label="再生/一時停止">
         <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
