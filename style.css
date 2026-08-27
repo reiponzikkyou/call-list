@@ -377,6 +377,53 @@ header a {
   text-decoration: none;
 }
 
+.song-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.song-title-row .song-title {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+.song-share-btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  color: var(--text-color);
+  background: rgba(255, 255, 255, .05);
+  cursor: pointer;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 700;
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.song-share-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.song-share-btn:hover,
+.song-share-btn:focus-visible {
+  border-color: rgba(255, 77, 141, .5);
+  color: var(--primary-bright);
+  background: rgba(255, 77, 141, .1);
+}
+
 song-navigation,
 call-guide-notice {
   display: block;

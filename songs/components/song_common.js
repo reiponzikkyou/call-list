@@ -18,3 +18,63 @@ class CallGuideNotice extends HTMLElement {
 
 customElements.define('song-navigation', SongNavigation);
 customElements.define('call-guide-notice', CallGuideNotice);
+
+const PUBLIC_SITE_URL = 'https://reiponzikkyou.github.io/call-list/';
+
+function getPublicSongUrl() {
+  const encodedFileName = window.location.pathname.split('/').pop();
+  let fileName = encodedFileName || 'index.html';
+  try {
+    fileName = decodeURIComponent(fileName);
+  } catch (error) {
+    // 不正なエンコードの場合は取得したファイル名をそのまま使用する
+  }
+  return new URL('songs/' + encodeURIComponent(fileName), PUBLIC_SITE_URL).href;
+}
+
+function installSongShareButton() {
+  const title = document.querySelector('.song-title');
+  if (!title || title.parentElement?.classList.contains('song-title-row')) return;
+
+  const row = document.createElement('div');
+  row.className = 'song-title-row';
+  title.parentNode.insertBefore(row, title);
+  row.appendChild(title);
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'song-share-btn';
+  button.setAttribute('aria-label', 'この楽曲ページを共有');
+  button.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18 16a3 3 0 0 0-2.4 1.2L8.9 13.3a3.2 3.2 0 0 0 0-2.6l6.7-3.9A3 3 0 1 0 15 5c0 .2 0 .4.1.6L8.4 9.5a3 3 0 1 0 0 5l6.7 3.9A3 3 0 1 0 18 16Z"/>
+    </svg>
+    <span>共有</span>
+  `;
+
+  button.addEventListener('click', async () => {
+    const shareData = { title: document.title, url: getPublicSongUrl() };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+      await navigator.clipboard.writeText(shareData.url);
+      const label = button.querySelector('span');
+      label.textContent = 'コピー済み';
+      window.setTimeout(() => { label.textContent = '共有'; }, 1600);
+    } catch (error) {
+      if (error?.name !== 'AbortError') {
+        window.prompt('ページURLをコピーしてください', shareData.url);
+      }
+    }
+  });
+
+  row.appendChild(button);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', installSongShareButton);
+} else {
+  installSongShareButton();
+}
