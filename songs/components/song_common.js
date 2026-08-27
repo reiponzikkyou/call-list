@@ -44,29 +44,23 @@ function installSongShareButton() {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'song-share-btn';
-  button.setAttribute('aria-label', 'この楽曲ページを共有');
+  button.setAttribute('aria-label', 'この楽曲ページのURLをコピー');
   button.innerHTML = `
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M18 16a3 3 0 0 0-2.4 1.2L8.9 13.3a3.2 3.2 0 0 0 0-2.6l6.7-3.9A3 3 0 1 0 15 5c0 .2 0 .4.1.6L8.4 9.5a3 3 0 1 0 0 5l6.7 3.9A3 3 0 1 0 18 16Z"/>
     </svg>
-    <span>共有</span>
+    <span>URLをコピー</span>
   `;
 
   button.addEventListener('click', async () => {
-    const shareData = { title: document.title, url: getPublicSongUrl() };
+    const publicUrl = getPublicSongUrl();
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-        return;
-      }
-      await navigator.clipboard.writeText(shareData.url);
+      await navigator.clipboard.writeText(publicUrl);
       const label = button.querySelector('span');
-      label.textContent = 'コピー済み';
-      window.setTimeout(() => { label.textContent = '共有'; }, 1600);
+      label.textContent = 'コピーしました';
+      window.setTimeout(() => { label.textContent = 'URLをコピー'; }, 1600);
     } catch (error) {
-      if (error?.name !== 'AbortError') {
-        window.prompt('ページURLをコピーしてください', shareData.url);
-      }
+      window.prompt('ページURLをコピーしてください', publicUrl);
     }
   });
 
