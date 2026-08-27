@@ -343,10 +343,12 @@
         <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 8px 12px; border-radius: 6px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 0.85rem; color: #666;">再生時間:</span>
-            <span class="current-time-display" id="current-time-text">0:00</span>
+            <span class="current-time-display" id="current-time-text">0:00.0</span>
           </div>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
             <button class="btn btn-outline btn-sm" onclick="togglePlayPause()">⏯ 再生/一時停止</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(-0.1)">−0.1秒</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="seekRelative(0.1)">＋0.1秒</button>
             <button class="btn btn-outline btn-sm" onclick="seekRelative(-5)">⏪ 5秒戻る</button>
             <button class="btn btn-outline btn-sm" onclick="seekRelative(5)">⏩ 5秒進む</button>
           </div>
@@ -477,9 +479,12 @@
     }
 
     // YouTube IFrame API 初期化
-    window.onYouTubeIframeAPIReady = function() {
+    window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
+
+    function initializeYouTubePlayer() {
+      if (ytPlayer || !window.YT || typeof YT.Player !== 'function') return;
       createPlayer('L-VMYQ1v-vM');
-    };
+    }
 
     function createPlayer(videoId) {
       if (ytPlayer && typeof ytPlayer.destroy === 'function') {
@@ -522,14 +527,18 @@
             }
           } catch(e) {}
         }
-      }, 150);
+      }, 100);
     }
 
     function formatSeconds(sec) {
-      if (isNaN(sec)) return '0:00';
+      if (isNaN(sec)) return '0:00.0';
       var m = Math.floor(sec / 60);
-      var s = Math.floor(sec % 60);
-      return m + ':' + (s < 10 ? '0' : '') + s;
+      var s = Math.round((sec - m * 60) * 10) / 10;
+      if (s >= 60) {
+        m += 1;
+        s = 0;
+      }
+      return m + ':' + (s < 10 ? '0' : '') + s.toFixed(1);
     }
 
     function extractVideoId(input) {
@@ -882,6 +891,7 @@
     document.getElementById('video-id-input').addEventListener('input', updateOutput);
 
     // 初期描画
+    initializeYouTubePlayer();
     updateOutput();
   </script>
 </body>
