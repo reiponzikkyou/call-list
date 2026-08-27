@@ -1,11 +1,31 @@
 // 軌跡を追加するときは、この配列へオブジェクトを1つ追加してください。
 // date は並び替えに使うため YYYY.MM 形式で記述します。
 const groupHistory = [
+  // ▼ 追加用テンプレート（コピーしてコメント記号を外してください）
+  /*
+  {
+    date: '20XX.XX',
+    category: 'MILESTONE',
+    title: '出来事のタイトル',
+    description: '出来事の説明1行目\n出来事の説明2行目（不要ならこの行を削除）',
+    image: 'images/example.jpg',
+    imageAlt: '画像の説明'
+  },
+  */
+
   {
     date: '20XX.XX',
     category: 'MILESTONE',
     title: '新グループデビュー予定'
-  }
+  },
+  {
+    date: '2026.08',
+    category: 'MILESTONE',
+    title: '新グループ準備期間',
+    description: '櫻木まりあ/卯兎りりな/美羽優来の三人で活動を継続。\n準備期間限定の新衣装に加え、新曲「Sacrifice」を発表。\n同事務所のHIGH SPIRITSやアキシブprojectの楽曲をカバーしながら、新体制に向け実力を上げている。',
+
+  },
+
 ];
 
 const escapeHtml = (value = '') => String(value)

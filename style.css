@@ -992,6 +992,7 @@ footer { padding: 20px; color: #535362; text-align: center; font-size: .65rem; f
   color: var(--muted-color);
   font-size: .78rem;
   line-height: 1.7;
+  white-space: pre-line;
 }
 
 .history-image {
