@@ -84,6 +84,26 @@
       new ResizeObserver(resizeWidget).observe(widgetFrame);
       resizeWidget();
     }
+
+    // ときどき夜空を横切る、控えめな流れ星
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const scheduleShootingStar = () => {
+        const delay = 7000 + Math.random() * 8000;
+
+        window.setTimeout(() => {
+          const star = document.createElement('span');
+          star.className = 'shooting-star';
+          star.setAttribute('aria-hidden', 'true');
+          star.style.setProperty('--shooting-star-x', `${5 + Math.random() * 40}vw`);
+          star.style.setProperty('--shooting-star-y', `${8 + Math.random() * 34}vh`);
+          document.body.appendChild(star);
+          star.addEventListener('animationend', () => star.remove(), { once: true });
+          scheduleShootingStar();
+        }, delay);
+      };
+
+      scheduleShootingStar();
+    }
   </script>
 </body>
 </html>
