@@ -627,6 +627,36 @@ input[type="range"] {
   outline-offset: 2px;
 }
 
+/* 「私、私に恋してる」限定：シークバーのつまみ */
+.watashi-page #seek-bar::-webkit-slider-thumb {
+  width: 42px;
+  height: 42px;
+  margin-top: -18px;
+  border: 0;
+  border-radius: 0 !important;
+  background: transparent url('media/image/tucha.png') center / contain no-repeat;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .4);
+}
+
+.watashi-page #seek-bar::-moz-range-thumb {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 0 !important;
+  background: transparent url('media/image/tucha.png') center / contain no-repeat;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .4);
+}
+
+.watashi-page #seek-bar:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid rgba(255, 117, 167, .38);
+  outline-offset: 2px;
+}
+
+.watashi-page #seek-bar:focus-visible::-moz-range-thumb {
+  outline: 3px solid rgba(255, 117, 167, .38);
+  outline-offset: 2px;
+}
+
 .tile-home-btn:hover svg,
 .tile-home-btn:focus-visible svg {
   fill: var(--primary-bright);
