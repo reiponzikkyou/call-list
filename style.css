@@ -798,6 +798,27 @@ header h1 { margin: 5px 0 10px; font-size: clamp(1.55rem, 6vw, 2.25rem); line-he
 .widget-credit { margin: 8px 4px 1px; color: var(--muted-color); text-align: right; font-size: .68rem; }
 .widget-credit a { margin-left: 4px; color: #b6b6c3; font-weight: 700; text-decoration: none; }
 
+.pickup-movie-section {
+  margin-bottom: 18px;
+}
+
+.pickup-movie-card {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(145deg, rgba(255, 77, 141, .07), rgba(255, 255, 255, .025)), var(--card-bg);
+}
+
+.pickup-movie-card .tiktok-embed {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 605px !important;
+  margin: 0 auto !important;
+}
+
 .song-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .song-item { margin-bottom: 0; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: none; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
 .song-item a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; min-height: 52px; padding: 15px 16px; font-size: .9rem; font-weight: 650; }
