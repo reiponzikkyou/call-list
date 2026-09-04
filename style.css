@@ -628,7 +628,13 @@ input[type="range"] {
 }
 
 /* 「私、私に恋してる」限定：シークバーのつまみ */
+.watashi-page #seek-bar {
+  z-index: 3;
+}
+
 .watashi-page #seek-bar::-webkit-slider-thumb {
+  position: relative;
+  z-index: 10;
   width: 42px;
   height: 42px;
   margin-top: -18px;
@@ -639,6 +645,8 @@ input[type="range"] {
 }
 
 .watashi-page #seek-bar::-moz-range-thumb {
+  position: relative;
+  z-index: 10;
   width: 42px;
   height: 42px;
   border: 0;
@@ -817,6 +825,58 @@ header h1 { margin: 5px 0 10px; font-size: clamp(1.55rem, 6vw, 2.25rem); line-he
   min-width: 0 !important;
   max-width: 605px !important;
   margin: 0 auto !important;
+}
+
+.pickup-movie-placeholder {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  min-height: 260px;
+  padding: 42px 18px;
+  place-content: center;
+  gap: 12px;
+  color: var(--muted-color);
+  text-align: center;
+}
+
+.pickup-movie-play {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  padding-left: 4px;
+  place-items: center;
+  border: 1px solid rgba(255, 77, 141, .42);
+  border-radius: 50% !important;
+  color: #fff;
+  background: rgba(255, 77, 141, .16);
+  box-shadow: 0 0 26px rgba(255, 77, 141, .15);
+}
+
+.pickup-movie-placeholder p {
+  color: var(--text-color);
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.pickup-movie-load {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  color: #fff;
+  background: var(--primary-color);
+  cursor: pointer;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 750;
+}
+
+.pickup-movie-load:hover,
+.pickup-movie-load:focus-visible {
+  background: var(--primary-bright);
+}
+
+.pickup-movie-placeholder small {
+  font-size: .68rem;
 }
 
 .song-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
