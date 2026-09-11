@@ -399,6 +399,10 @@
           <textarea id="call-input"></textarea>
         </div>
 
+        <div id="variant-editor"></div>
+        <button type="button" class="btn btn-outline" onclick="addVariantInput()">＋ 同じタイミングの別コールを追加</button>
+        <p style="font-size: .8rem; color: #666;">候補は楽曲ページで横スワイプして確認できます。まとめから選んだ内容は共通の一覧に連動します。「自由入力にする」で曲に合わせて変更できます。</p>
+
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
           <span style="font-size: 0.78rem; color: #888;">※Ctrl + Enter でも追加できます</span>
           <button class="btn btn-primary" onclick="addOrUpdateCall()" id="add-btn">➕ リストに追加</button>
@@ -462,6 +466,8 @@
 
   <!-- YouTube IFrame API スクリプト -->
   <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="../call-catalog.js"></script>
+  <script src="editor-variants.js"></script>
 
   <script>
     // VS Code Webview 連携
@@ -621,18 +627,22 @@
       var start = document.getElementById('start-time-input').value.trim();
       var end = document.getElementById('end-time-input').value.trim();
       var lyrics = document.getElementById('lyrics-input').value.trim();
-      var call = document.getElementById('call-input').value.trim();
+      var variants = readVariantInputs();
+      var call = variants[0].call;
 
       if (!start || !end) {
         alert('開始時間と終了時間は必須です（例: 0:07, 0:13）');
         return;
       }
-      if (!call) {
+      if (variants.some(function(variant) { return !variant.call.trim(); })) {
         alert('コール内容を入力してください');
         return;
       }
 
       var item = { start: start, end: end, call: call };
+      if (variants.length > 1) item.variants = variants;
+      else if (variants[0].mixId) item.mixId = variants[0].mixId;
+      if (editingIndex >= 0 && callDataList[editingIndex].time) item.time = callDataList[editingIndex].time;
       if (lyrics) item.lyrics = lyrics;
 
       if (editingIndex >= 0) {
@@ -650,6 +660,7 @@
       document.getElementById('end-time-input').value = '';
       document.getElementById('lyrics-input').value = '';
       document.getElementById('call-input').value = '';
+      resetVariantInputs();
       document.getElementById('lyrics-input').focus();
 
       renderCallList();
@@ -663,6 +674,7 @@
       document.getElementById('end-time-input').value = item.end;
       document.getElementById('lyrics-input').value = item.lyrics || '';
       document.getElementById('call-input').value = item.call || '';
+      loadVariantInputs(item);
       document.getElementById('add-btn').textContent = '💾 変更を保存';
 
       var sec = parseTimeToSec(item.start);
@@ -675,8 +687,9 @@
       callDataList.splice(index, 1);
       if (editingIndex === index) {
         editingIndex = -1;
+        resetVariantInputs();
         document.getElementById('add-btn').textContent = '➕ リストに追加';
-      }
+      } else if (editingIndex > index) editingIndex -= 1;
       renderCallList();
       updateOutput();
     }
@@ -686,6 +699,8 @@
       if (confirm('登録されたコールをすべて消去しますか？')) {
         callDataList = [];
         editingIndex = -1;
+        resetVariantInputs();
+        document.getElementById('add-btn').textContent = '➕ リストに追加';
         renderCallList();
         updateOutput();
       }
@@ -755,7 +770,7 @@
           '<span class="time-badge">' + escapeHtml(item.start) + ' ~ ' + escapeHtml(item.end) + '</span>' +
           (item.lyrics ? '<span class="item-lyrics">' + escapeHtml(item.lyrics) + '</span>' : '') +
           '</div>' +
-          '<div class="item-call">' + escapeHtml(item.call).replace(/\n/g, ' / ') + '</div>';
+          '<div class="item-call">' + escapeHtml(describeVariants(item)).replace(/\n/g, ' / ') + '</div>';
 
         var actions = document.createElement('div');
         actions.className = 'item-actions';
@@ -780,6 +795,9 @@
           parts.push('lyrics: ' + JSON.stringify(item.lyrics));
         }
         parts.push('call: ' + JSON.stringify(item.call));
+        if (item.mixId) parts.push('mixId: ' + JSON.stringify(item.mixId));
+        if (item.variants) parts.push('variants: ' + JSON.stringify(item.variants));
+        if (item.time) parts.push('time: ' + JSON.stringify(item.time));
 
         var isLast = (i === callDataList.length - 1);
         lines.push('  { ' + parts.join(', ') + ' }' + (isLast ? '' : ','));
@@ -791,7 +809,7 @@
     function generateFullHtml() {
       var title = document.getElementById('song-title-input').value.trim() || '曲名';
       var videoId = document.getElementById('video-id-input').value.trim() || '動画ID';
-      var callsCode = generateCallsCode();
+      var callsCode = generateCallsCode().replace(/</g, '\\u003c');
 
       return '<!DOCTYPE html>\n' +
 '<html lang="ja">\n' +
@@ -814,10 +832,11 @@
 '      <div class="lyrics" id="call-list-container"></div>\n' +
 '    </div>\n' +
 '  </div>\n\n' +
+'  <script src="../call-catalog.js"><\/script>\n' +
 '  <script src="../player.js"><\/script>\n' +
 '  <script>\n' +
 '    initCallGuide({\n' +
-'      videoId: ' + JSON.stringify(videoId) + ',\n' +
+'      videoId: ' + JSON.stringify(videoId).replace(/</g, '\\u003c') + ',\n' +
 '      ' + callsCode.replace(/\n/g, '\n      ') + '\n' +
 '    });\n' +
 '  <\/script>\n\n' +
@@ -910,6 +929,9 @@
         var parsed = Function('"use strict"; return (' + jsonStr + ')')();
         if (Array.isArray(parsed)) {
           callDataList = parsed;
+          editingIndex = -1;
+          resetVariantInputs();
+          document.getElementById('add-btn').textContent = '➕ リストに追加';
           renderCallList();
           updateOutput();
           closeImportModal();

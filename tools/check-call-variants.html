@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Call variants regression check</title>
+<pre id="result">RUNNING</pre>
+<iframe id="editor" src="editor.html?mix=mix-1" style="width:390px;height:844px"></iframe>
+<iframe id="mixes" src="../mixes.html"></iframe>
+<iframe id="song" src="../songs/template.html" style="width:390px;height:844px"></iframe>
+<script>
+window.addEventListener('load', async function() {
+  const result = document.getElementById('result');
+  function check(condition, message) { if (!condition) throw new Error(message); }
+  try {
+    const editor = document.getElementById('editor').contentWindow;
+    const mixes = document.getElementById('mixes').contentWindow;
+    const song = document.getElementById('song').contentWindow;
+    check(mixes.document.querySelectorAll('.mix-card').length === mixes.CALL_CATALOG.length, 'catalog count');
+    check(editor.readVariantInputs()[0].mixId === 'mix-1', 'preselected mix');
+    editor.document.getElementById('start-time-input').value = '0:07';
+    editor.document.getElementById('end-time-input').value = '0:13';
+    editor.addVariantInput({ call: '別コール\n2行目' });
+    editor.addOrUpdateCall();
+    check(editor.callDataList[0].variants.length === 2, 'save variants');
+    editor.editCall(0);
+    editor.addOrUpdateCall();
+    check(editor.callDataList[0].variants[0].mixId === 'mix-1', 'edit preserves reference');
+    editor.document.getElementById('import-textarea').value = editor.generateCallsCode();
+    editor.executeImport();
+    check(editor.callDataList[0].variants[1].call === '別コール\n2行目', 'import round trip');
+    check(editor.generateFullHtml().includes('../call-catalog.js'), 'export dependency');
+    editor.editCall(0);
+    editor.variantInputs[0].wrapper.querySelector('button').click();
+    check(!editor.readVariantInputs()[0].mixId && !editor.variantInputs[0].textarea.readOnly, 'detach reference');
+    editor.variantInputs[1].wrapper.querySelector('button:last-child').click();
+    check(editor.readVariantInputs().length === 1, 'remove variant');
+    let seeks = 0;
+    song.ytPlayer = { seekTo() { seeks++; }, playVideo() {}, getCurrentTime() { return 8; }, getDuration() { return 30; } };
+    song.initCallGuide({ calls: [
+      { start: 7, end: 13, variants: [{ mixId: 'mix-1' }, { call: '別コール' }] },
+      { start: 14, end: 20, call: ['既存1', '既存2'] }
+    ] });
+    song.document.querySelector('.variant-controls button:last-child').click();
+    await new Promise(resolve => setTimeout(resolve, 200));
+    check(song.document.querySelector('.variant-controls span').textContent === '2 / 2', 'next candidate');
+    check(seeks === 0, 'switch must not seek');
+    song.updateHighlight();
+    check(song.document.querySelector('.call-block').classList.contains('active'), 'highlight');
+    check(song.document.querySelectorAll('.call-block')[1].innerText.includes('既存1\n既存2'), 'legacy multiline');
+    check(song.document.documentElement.scrollWidth <= song.innerWidth, 'mobile overflow');
+    result.textContent = 'PASS: catalog, editor, edit, import/export, detach/remove, carousel, highlight, legacy multiline, mobile width';
+  } catch (error) {
+    result.textContent = 'FAIL: ' + error.stack;
+  }
+});
+</script>

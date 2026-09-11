@@ -49,6 +49,70 @@ function formatContent(content) {
   return escapeHtml(String(content)).replace(/\n/g, '<br>');
 }
 
+function resolveCallVariant(variant) {
+  var entry = (window.CALL_CATALOG || []).find(function(entry) { return entry.id === variant.mixId; });
+  return {
+    name: variant.name || (entry && entry.name) || '',
+    call: entry ? entry.call : (variant.call || (variant.mixId ? '参照先のコールが見つかりません' : ''))
+  };
+}
+
+function renderCallVariants(block, item) {
+  var variants = (item.variants && item.variants.length ? item.variants : [item]).map(resolveCallVariant);
+  var track = document.createElement('div');
+  track.className = 'call-variants';
+  variants.forEach(function(variant, index) {
+    var slide = document.createElement('div');
+    slide.className = 'call-variant';
+    slide.setAttribute('role', 'group');
+    slide.setAttribute('aria-label', (index + 1) + ' / ' + variants.length);
+    slide.innerHTML = (variant.name ? '<div class="variant-name">' + escapeHtml(variant.name) + '</div>' : '') +
+      '<div class="call">' + formatContent(variant.call) + '</div>';
+    track.appendChild(slide);
+  });
+  block.appendChild(track);
+  if (variants.length < 2) return;
+  track.tabIndex = 0;
+  track.setAttribute('aria-label', 'コール候補。左右にスワイプ、または左右キーで切り替え');
+  var controls = document.createElement('div');
+  controls.className = 'variant-controls';
+  var previous = document.createElement('button');
+  var next = document.createElement('button');
+  var status = document.createElement('span');
+  previous.type = next.type = 'button';
+  previous.textContent = '← 前のコール';
+  next.textContent = '次のコール →';
+  status.setAttribute('aria-live', 'polite');
+  controls.append(previous, status, next);
+  block.appendChild(controls);
+  function current() { return Math.round(track.scrollLeft / (track.clientWidth || 1)); }
+  function update() {
+    var index = current();
+    status.textContent = (index + 1) + ' / ' + variants.length;
+    previous.disabled = index === 0;
+    next.disabled = index === variants.length - 1;
+  }
+  function move(delta) {
+    track.scrollTo({ left: Math.max(0, Math.min(variants.length - 1, current() + delta)) * track.clientWidth, behavior: 'auto' });
+  }
+  controls.addEventListener('click', function(event) { event.stopPropagation(); });
+  previous.addEventListener('click', function() { move(-1); });
+  next.addEventListener('click', function() { move(1); });
+  track.addEventListener('keydown', function(event) {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    move(event.key === 'ArrowRight' ? 1 : -1);
+  });
+  // スワイプ操作を、ブロックのクリック再生として扱わない。
+  var pointerX = 0;
+  var dragged = false;
+  track.addEventListener('pointerdown', function(event) { pointerX = event.clientX; dragged = false; });
+  track.addEventListener('pointermove', function(event) { if (Math.abs(event.clientX - pointerX) > 8) dragged = true; });
+  track.addEventListener('click', function(event) { if (dragged) event.stopPropagation(); });
+  track.addEventListener('scroll', update);
+  update();
+}
+
 function initCallGuide(config) {
   if (!config) return;
   var videoId = config.videoId;
@@ -76,10 +140,8 @@ function initCallGuide(config) {
       if (item.lyrics) {
         html += '<div class="lyrics-text">' + formatContent(item.lyrics) + '</div>';
       }
-      if (item.call) {
-        html += '<div class="call">' + formatContent(item.call) + '</div>';
-      }
       block.innerHTML = html;
+      renderCallVariants(block, item);
 
       block.addEventListener('click', function() {
         if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
@@ -309,7 +371,5 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-
-customElements.define('tile-player', TilePlayer);
 
 });

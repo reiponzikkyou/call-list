@@ -627,6 +627,20 @@ input[type="range"] {
   outline-offset: 2px;
 }
 
+.call-variants {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.call-variant { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+.variant-name { font-size: .85rem; opacity: .8; margin: 4px 0; }
+.variant-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; font-size: .8rem; }
+.variant-controls button { font: inherit; color: inherit; border: 1px solid currentColor; border-radius: 6px; background: transparent; padding: 6px 8px; cursor: pointer; }
+.variant-controls button:disabled { opacity: .35; cursor: default; }
+.call-variants:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
 /* 「私、私に恋してる」限定：シークバーのつまみ */
 .watashi-page #seek-bar {
   z-index: 3;
