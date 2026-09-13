@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>コール登録ツール</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="mix-page">
+  <header class="site-header"><div class="header-inner"><span class="eyebrow">LOCAL TOOL</span><h1>コール登録ツール</h1><span class="status">call-catalog.js 編集用</span></div></header>
+  <main class="container">
+    <a href="../mixes.html" class="back-btn">← コール一覧に戻る</a>
+    <call-catalog-editor></call-catalog-editor>
+    <section class="content-section" aria-labelledby="registered-title">
+      <div class="section-header"><div><span class="section-number">DATA</span><h2 id="registered-title">現在の登録内容</h2></div></div>
+      <call-catalog-list editable></call-catalog-list>
+    </section>
+  </main>
+  <footer>UNOFFICIAL CALL GUIDE</footer>
+  <script src="../call-catalog.js"></script>
+  <script src="../components/call_catalog_components.js?v=2"></script>
+  <script>
+    const editor = document.querySelector('call-catalog-editor');
+    const list = document.querySelector('call-catalog-list');
+    editor.addEventListener('catalog-change', (event) => { list.entries = event.detail.entries; });
+    list.addEventListener('catalog-edit', (event) => { editor.edit(event.detail.id); });
+  </script>
+</body>
+</html>

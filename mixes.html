@@ -7,125 +7,19 @@
   <title>よく使うコール（MIX）一覧</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="mix-page">
-  <header class="site-header">
-    <div class="header-inner">
-      <span class="eyebrow">CALL GUIDE</span>
-      <h1>よく使うコール（MIX）</h1>
-      <span class="status">ライブでよく使う定番コール集</span>
-    </div>
-  </header>
-
+<body class="mix-page mix-list-page">
+  <header class="site-header"><div class="header-inner"><span class="eyebrow">CALL GUIDE</span><h1>よく使うコール（MIX）</h1><span class="status">ライブでよく使う定番コール集</span></div></header>
   <main class="container">
     <a href="index.html" class="back-btn">← 楽曲一覧に戻る</a>
-
-    <section class="intro-card mix-intro">
-      <p>定番コールをまとめて確認できます。</p>
-      <span>コール名、実際に発声する内容、参考動画をワンセットで掲載しています。</span>
-    </section>
-
+    <section class="intro-card mix-intro"><p>定番コールをまとめて確認できます。</p><span>コール名と実際に発声する内容を掲載しています。</span></section>
     <section class="content-section" aria-labelledby="mix-list-title">
-      <div class="section-header">
-        <div><span class="section-number">MIX</span><h2 id="mix-list-title">コール一覧</h2></div>
-      </div>
-
-      <div class="mix-list"></div>
+      <div class="section-header"><div><span class="section-number">MIX</span><h2 id="mix-list-title">コール一覧</h2></div></div>
+      <call-catalog-list show-usage></call-catalog-list>
     </section>
   </main>
-
   <footer>UNOFFICIAL CALL GUIDE</footer>
   <script src="reveal.js?v=1"></script>
   <script src="call-catalog.js"></script>
-  <script>
-    const categoryLabels = {
-      basic: '基本・言語系MIX',
-      variable: '可変・連結系MIX',
-      koujou: '口上系',
-      neta: 'ネタ・作品系MIX'
-    };
-    const mixList = document.querySelector('.mix-list');
-
-    CALL_CATALOG.forEach((entry) => {
-      const card = document.createElement('article');
-      card.className = 'mix-card';
-      card.id = entry.id;
-      card.dataset.category = entry.category;
-      const name = document.createElement('h3');
-      name.className = 'mix-name';
-      name.textContent = entry.name;
-      const detail = document.createElement('div');
-      detail.className = 'mix-detail';
-      detail.innerHTML = '<span class="mix-label">コール内容</span>';
-      const words = document.createElement('p');
-      words.className = 'mix-words';
-      words.style.whiteSpace = 'pre-line';
-      words.textContent = entry.call;
-      detail.appendChild(words);
-      const video = document.createElement('a');
-      video.className = 'mix-video-link';
-      video.href = entry.video;
-      video.target = '_blank';
-      video.rel = 'noopener noreferrer';
-      video.textContent = '参考動画をYouTubeで探す →';
-      const use = document.createElement('a');
-      use.className = 'mix-video-link';
-      use.href = 'tools/editor.html?mix=' + encodeURIComponent(entry.id);
-      use.textContent = '制作ページで使う →';
-      card.append(name, detail, video, use);
-      mixList.appendChild(card);
-    });
-
-    const songUsage = {
-      'スタンダードMIX': [
-        ['Sacrifice', 'songs/Sacrifice.html'],
-        ['FAKE Me', 'songs/FAKE Me.html'],
-        ['UGLY DOLL', 'songs/UGLY DOLL.html']
-      ],
-      'アイヌ語MIX': [
-        ['ハグバグ', 'songs/ハグバグ.html'],
-        ['僕とボク', 'songs/僕とボク.html'],
-        ['絶対らゔぃちゅ♡', 'songs/絶対らゔぃちゅ♡.html']
-      ],
-      'アッチェレ': [['UGLY DOLL', 'songs/UGLY DOLL.html']],
-      'ホグワーツMIX': [['UGLY DOLL', 'songs/UGLY DOLL.html']],
-      'ビスマルク口上': [['僕とボク', 'songs/僕とボク.html']],
-      '銀河口上＋ファボリアスター': [['残り火', 'songs/残り火.html']],
-      '花火MIX': [['私、私に恋してる', 'songs/私、私に恋してる.html']],
-      '可変三連MIX': [['Chu♡Key×Chu♡Key', 'songs/Chu♡Key×Chu♡Key.html']],
-      '転調MIX': [['僕とボク', 'songs/僕とボク.html']],
-      'ワールドカオス（＋逆打ち）': [
-        ['残り火', 'songs/残り火.html'],
-        ['ハグバグ', 'songs/ハグバグ.html']
-      ],
-      'キャプテン翼MIX': [['残り火', 'songs/残り火.html']]
-    };
-
-    if (mixList) {
-      mixList.querySelectorAll('.mix-card').forEach((card) => {
-        const name = card.querySelector('.mix-name')?.textContent.trim();
-        const songs = songUsage[name] || [];
-        const usage = document.createElement('aside');
-        usage.className = 'mix-used-in';
-        usage.innerHTML = `<span class="mix-used-in-label">このサイトで使う曲</span>${
-          songs.length
-            ? songs.map(([title, href]) => `<a href="${href}">${title}</a>`).join('')
-            : '<span class="mix-used-in-empty">未登録</span>'
-        }`;
-        card.appendChild(usage);
-      });
-
-      Object.entries(categoryLabels).forEach(([category, label]) => {
-        const cards = [...mixList.querySelectorAll(`[data-category="${category}"]`)];
-        if (!cards.length) return;
-
-        const group = document.createElement('section');
-        group.className = 'mix-category';
-        group.setAttribute('aria-labelledby', `mix-category-${category}`);
-        group.innerHTML = `<h3 class="mix-category-title" id="mix-category-${category}">${label}</h3>`;
-        cards.forEach((card) => group.appendChild(card));
-        mixList.appendChild(group);
-      });
-    }
-  </script>
+  <script src="components/call_catalog_components.js?v=2"></script>
 </body>
 </html>

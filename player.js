@@ -50,7 +50,9 @@ function formatContent(content) {
 }
 
 function resolveCallVariant(variant) {
-  var entry = (window.CALL_CATALOG || []).find(function(entry) { return entry.id === variant.mixId; });
+  var entry = window.CallCatalog
+    ? window.CallCatalog.get(variant.mixId)
+    : (window.CALL_CATALOG || []).find(function(entry) { return entry.id === variant.mixId; });
   return {
     name: variant.name || (entry && entry.name) || '',
     call: entry ? entry.call : (variant.call || (variant.mixId ? '参照先のコールが見つかりません' : ''))
@@ -66,29 +68,27 @@ function renderCallVariants(block, item) {
     slide.className = 'call-variant';
     slide.setAttribute('role', 'group');
     slide.setAttribute('aria-label', (index + 1) + ' / ' + variants.length);
-    slide.innerHTML = (variant.name ? '<div class="variant-name">' + escapeHtml(variant.name) + '</div>' : '') +
-      '<div class="call">' + formatContent(variant.call) + '</div>';
+    slide.innerHTML = '<div class="call">' + formatContent(variant.call) + '</div>' +
+      (variant.name ? '<div class="call-name">' + escapeHtml(variant.name) + '</div>' : '');
     track.appendChild(slide);
   });
   block.appendChild(track);
   if (variants.length < 2) return;
   track.tabIndex = 0;
-  track.setAttribute('aria-label', 'コール候補。左右にスワイプ、または左右キーで切り替え');
+  track.setAttribute('aria-label', 'コール候補。タップ、左右スワイプ、または左右キーで切り替え');
+  track.setAttribute('title', 'クリック・タップで次のコールへ');
   var controls = document.createElement('div');
   controls.className = 'variant-controls';
   var previous = document.createElement('button');
   var next = document.createElement('button');
-  var status = document.createElement('span');
   previous.type = next.type = 'button';
   previous.textContent = '← 前のコール';
   next.textContent = '次のコール →';
-  status.setAttribute('aria-live', 'polite');
-  controls.append(previous, status, next);
+  controls.append(previous, next);
   block.appendChild(controls);
   function current() { return Math.round(track.scrollLeft / (track.clientWidth || 1)); }
   function update() {
     var index = current();
-    status.textContent = (index + 1) + ' / ' + variants.length;
     previous.disabled = index === 0;
     next.disabled = index === variants.length - 1;
   }
@@ -108,7 +108,10 @@ function renderCallVariants(block, item) {
   var dragged = false;
   track.addEventListener('pointerdown', function(event) { pointerX = event.clientX; dragged = false; });
   track.addEventListener('pointermove', function(event) { if (Math.abs(event.clientX - pointerX) > 8) dragged = true; });
-  track.addEventListener('click', function(event) { if (dragged) event.stopPropagation(); });
+  track.addEventListener('click', function(event) {
+    event.stopPropagation();
+    if (!dragged) move(current() === variants.length - 1 ? -current() : 1);
+  });
   track.addEventListener('scroll', update);
   update();
 }

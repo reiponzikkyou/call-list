@@ -6,6 +6,7 @@ function callText(value) {
 }
 
 function catalogEntry(id) {
+  if (window.CallCatalog) return window.CallCatalog.get(id);
   return (window.CALL_CATALOG || []).find(function(entry) { return entry.id === id; });
 }
 
@@ -30,11 +31,16 @@ function addVariantInput(value) {
   function populate() {
     select.replaceChildren(new Option('自由入力', ''));
     var query = search.value.trim().toLocaleLowerCase();
-    (window.CALL_CATALOG || []).forEach(function(entry) {
-      if (entry.id === state.mixId || (entry.name + '\n' + entry.call).toLocaleLowerCase().includes(query)) {
+    var entries = window.CallCatalog ? window.CallCatalog.search(query) : (window.CALL_CATALOG || []);
+    entries.forEach(function(entry) {
+      if (entry.id === state.mixId || !query || (entry.name + '\n' + entry.call).toLocaleLowerCase().includes(query)) {
         select.add(new Option(entry.name, entry.id));
       }
     });
+    if (state.mixId && !Array.from(select.options).some(function(option) { return option.value === state.mixId; })) {
+      var selectedEntry = catalogEntry(state.mixId);
+      if (selectedEntry) select.add(new Option(selectedEntry.name, selectedEntry.id));
+    }
     select.value = state.mixId;
   }
   function resolve() {

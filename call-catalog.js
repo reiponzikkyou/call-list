@@ -23,6 +23,7 @@ window.CALL_CATALOG = [
   },
   {
     "id": "mix-4",
+    "baseId": "mix-3",
     "category": "basic",
     "name": "本家アイヌ語MIX（アウトロ／10小節）",
     "call": "チャペ！ アペ！ カラ！ キナ！ ララ！ トゥスケ！ ウィスゥペ！ ケスィ！ スィスゥパ！",
@@ -114,6 +115,7 @@ window.CALL_CATALOG = [
   },
   {
     "id": "mix-17",
+    "baseId": "mix-3",
     "category": "variable",
     "name": "アイヌ日可変",
     "call": "チャーペー！ アーペー！（半倍速） カラ・キナ・ララ・トゥスケ・ウィスペ・ケスィ・スィスィパー！（倍速） チャペ！ アペ！ カラ！ キナ！ ララ！ トゥスケ！ ミョーホントゥスケ！（等速）",
@@ -148,3 +150,19 @@ window.CALL_CATALOG = [
     "video": "https://www.youtube.com/results?search_query=%E4%B8%89%E8%A7%92%E9%96%A2%E6%95%B0MIX+%E3%82%B3%E3%83%BC%E3%83%AB"
   }
 ];
+
+// サイト共通のコール台帳API。
+// 楽曲ページでは本文を複製せず mixId を保存し、表示時にこの台帳から名前と本文を解決する。
+window.CallCatalog = Object.freeze({
+  all: window.CALL_CATALOG,
+  get: function(id) {
+    return window.CALL_CATALOG.find(function(entry) { return entry.id === id; }) || null;
+  },
+  search: function(query) {
+    var normalized = String(query || '').trim().toLocaleLowerCase();
+    if (!normalized) return window.CALL_CATALOG.slice();
+    return window.CALL_CATALOG.filter(function(entry) {
+      return (entry.name + '\n' + entry.call + '\n' + entry.category).toLocaleLowerCase().includes(normalized);
+    });
+  }
+});

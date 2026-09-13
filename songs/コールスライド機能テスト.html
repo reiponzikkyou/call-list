@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>コールスライド機能テスト - コールガイド</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./components/song_common.js"></script>
+</head>
+<body class="call-slide-test-page">
+  <div class="container">
+    <song-navigation></song-navigation>
+
+    <main class="card">
+      <h1 class="song-title">コールスライド機能テスト</h1>
+
+      <div class="media-container">
+        <div id="player"></div>
+      </div>
+
+      <call-guide-notice></call-guide-notice>
+      <div class="lyrics" id="call-list-container"></div>
+    </main>
+  </div>
+
+  <script src="../call-catalog.js"></script>
+  <script src="../player.js"></script>
+  <script>
+    initCallGuide({
+      videoId: 'HnK9kA2CdFw',
+      calls: [
+        {
+          start: '0:08',
+          end: '0:30',
+          variants: [
+            { call: 'タイガー！ ファイヤー！ サイバー！ ファイバー！' },
+            { call: '虎！ 火！ 人造！ 繊維！' },
+            { call: 'オイ！ オイ！ オイ！ オイ！' }
+          ]
+        },
+        {
+          start: '1:08',
+          end: '1:13',
+          lyrics: '残りの熱も全部君に渡す',
+          call: 'うっおい うっおい うっおい うっおい\nおー おいおいおいおい'
+        },
+        {
+          start: '1:39',
+          end: '2:01',
+          variants: [
+            { call: 'せーの！ オイ！ オイ！' },
+            { call: 'まだまだいくぞ！\nもっと！ もっと！ もっと！ もっと！' }
+          ]
+        },
+        {
+          start: '2:42',
+          end: '2:54',
+          variants: [
+            { name: 'ワールドカオス', call: 'わ×6 ワールドカオス！\n諸行！ 小暮！ 時雨！ 神楽！ 金剛山！ 翔襲叉！' },
+            { mixId: 'mix-8' },
+            { mixId: 'mix-11' }
+          ]
+        }
+      ]
+    });
+  </script>
+
+  <tile-player></tile-player>
+  <script src="./components/tile_player.js"></script>
+</body>
+</html>

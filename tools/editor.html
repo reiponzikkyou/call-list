@@ -794,9 +794,17 @@
         if (item.lyrics) {
           parts.push('lyrics: ' + JSON.stringify(item.lyrics));
         }
-        parts.push('call: ' + JSON.stringify(item.call));
+        if (!item.mixId && !item.variants) parts.push('call: ' + JSON.stringify(item.call));
         if (item.mixId) parts.push('mixId: ' + JSON.stringify(item.mixId));
-        if (item.variants) parts.push('variants: ' + JSON.stringify(item.variants));
+        if (item.variants) {
+          var variants = item.variants.map(function(variant) {
+            if (variant.mixId) return { mixId: variant.mixId };
+            var output = { call: variant.call };
+            if (variant.name) output.name = variant.name;
+            return output;
+          });
+          parts.push('variants: ' + JSON.stringify(variants));
+        }
         if (item.time) parts.push('time: ' + JSON.stringify(item.time));
 
         var isLast = (i === callDataList.length - 1);
