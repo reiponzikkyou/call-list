@@ -309,8 +309,9 @@
       display: block;
     }
   </style>
+  <link rel="stylesheet" href="../heart-theme.css">
 </head>
-<body>
+<body class="timing-editor-page">
 
   <div class="app-header">
     <div class="app-title">
@@ -350,7 +351,7 @@
         </div>
 
         <!-- 再生コントローラー & 現在時間 -->
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 8px 12px; border-radius: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 8px 12px; border-radius: 6px;">
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <span style="font-size: 0.85rem; color: #666;">再生時間:</span>
             <span class="current-time-display" id="current-time-text">0:00.00</span>
@@ -448,7 +449,7 @@
 
   <!-- インポート用モーダル（非表示） -->
   <div id="import-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px;">
-    <div style="background: white; border-radius: 10px; max-width: 600px; width: 100%; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+    <div style="background: var(--card-bg); border-radius: 10px; max-width: 600px; width: 100%; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
       <h3 style="margin-bottom: 10px; color: var(--primary-color);">📥 既存の辞書データを読み込む</h3>
       <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
         既存の HTML ファイル内にある <code>calls: [ ... ]</code> の部分を貼り付けてください。
@@ -826,6 +827,7 @@
 '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
 '  <title>' + escapeHtml(title) + ' - コールガイド</title>\n' +
 '  <link rel="stylesheet" href="../style.css">\n' +
+'  <link rel="stylesheet" href="../heart-theme.css">\n' +
 '  <script src="./components/song_common.js"><\/script>\n' +
 '</head>\n' +
 '<body>\n\n' +

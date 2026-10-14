@@ -1,5 +1,5 @@
 // 軌跡を追加するときは、この配列へオブジェクトを1つ追加してください。
-// date は並び替えに使うため YYYY.MM 形式で記述します。
+// date は並び替えに使うため YYYY.MM または YYYY.MM.DD 形式で記述します。
 const groupHistory = [
   // ▼ 追加用テンプレート（コピーしてコメント記号を外してください）
   /*
@@ -14,9 +14,11 @@ const groupHistory = [
   */
 
   {
-    date: '20XX.XX',
-    category: 'MILESTONE',
-    title: '新グループデビュー予定'
+    date: '2026.10.27',
+    category: 'RE-DEBUT',
+    title: '±♡（プラマイハート）として再デビュー予定',
+    description: '2026年10月27日、新たなグループ名「±♡（プラマイハート）」として再デビューすることが決定。\n新メンバーとして、依乃のあ -yorino noa-、夢姫もも -ibuki momo-、儚慕ねね -hakanabo nene- が加入予定。',
+    planned: true
   },
   {
     date: '2026.08',
@@ -51,7 +53,7 @@ function renderTimeline() {
     return `
       <article class="history-event${index === 0 ? ' is-latest' : ''}">
         <div class="history-node" aria-hidden="true"></div>
-        ${index === 0 ? '<span class="history-now">NOW</span>' : ''}
+        ${index === 0 ? `<span class="history-now">${event.planned ? '予定' : 'NOW'}</span>` : ''}
         <div class="history-card">
           <div class="history-card-main">
             <div class="history-meta">
